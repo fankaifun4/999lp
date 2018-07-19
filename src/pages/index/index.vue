@@ -97,7 +97,7 @@
 <template>
   <div class="container">
     <div class="container-bg">
-      <img mode="aspectFit top" class="body-bg" src="/static/imgs/body.jpg" alt="">
+      <fixbg></fixbg>
       <img mode="aspectFit" class="body-mm" src="/static/imgs/imm.png" alt="">
       <div class="body-hudie"></div>
     </div>
@@ -114,16 +114,22 @@
             </div>
         </div>
         <div class="content-body">
-
+            <card text="啊实打实大"></card>
+           
         </div>
     </div>
   </div>
 </template>
 <script>
 import card from '@/components/card'
-
+import fixbg from '@/components/fixbg'
 export default {
+  components:{
+    card,
+    fixbg
+  },
   data () {
+
     return {
       motto: 'Hello World',
       userInfo: {},
@@ -131,17 +137,17 @@ export default {
         {
           name:"职业流派",
           img:"/static/imgs/zhuxian.png",
-          path:'^/job_style/main'
+          path:'job_style/main'
         },
         {
           name:"新闻动态",
           img:"/static/imgs/zhixian.png",
-          path:'^/news/main'
+          path:'news/main'
         },
         {
           name:"任务解密",
           img:"/static/imgs/qiyu.png",
-          path:'^/task_encry/main'
+          path:'task_encry/main'
         },
         // {
         //   name:"装备展台",
@@ -153,10 +159,6 @@ export default {
         // }
       ]
     }
-  },
-
-  components: {
-    card
   },
 
   methods: {
@@ -185,7 +187,7 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     goPath(model){
-      let path='^/'+model.path+'/main'
+      let path='../'+model.path
       wx.navigateTo({
         url:path
       })
