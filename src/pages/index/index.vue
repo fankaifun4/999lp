@@ -51,13 +51,13 @@
   z-index: 2;
   width:100%;
   height:100%;
+  box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: scroll;
   display: block;
-  padding:0 20px;
+  padding:0 20rpx;
   .nav-wrap{
     position: relative;
-    padding:0 30rpx 30rpx 30rpx;
     .nav-list {
       font-size:26rpx;
       display:flex;
@@ -65,8 +65,8 @@
       align-items: center;
       justify-content:space-between;
       .nav-item{
-        width:180rpx;
-        height:180rpx;
+        width:150rpx;
+        height:150rpx;
         color:rgba(74,81,110,1);
         font-weight: 700;
         padding:5rpx;
@@ -76,8 +76,8 @@
         text-align: center;
         background: rgba(185,189,200,.3);
         >img{
-          width:120rpx;
-          height:120rpx;
+          width:100rpx;
+          height:100rpx;
         }
       }
     }
@@ -89,7 +89,45 @@
     }
   }
   .content-body{
-    padding:50rpx;
+    border:15rpx solid rgba(67,108,119,.4);
+    background-position: center;
+    background-size: cover;
+    width:550rpx;
+    position: absolute;
+    top:400rpx;
+    bottom:10rpx;
+    box-sizing: border-box;
+    right:20rpx;
+    overflow: hidden;
+    border-radius: 13rpx 13rpx 0 0;
+    .body-title{
+      background:  rgba(67,108,119,.4);
+      text-align: center;
+      height:60rpx;
+      line-height: 60rpx;
+      font-size:16px;
+      color:#fff;
+    }
+    .body-list{
+      position: absolute;
+      top:60rpx;
+      width:100%;
+      background-image:linear-gradient(rgba(255,255,255,.5) 50%, rgba(255,255,255,.2));
+      bottom:0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      .list-item{
+        padding:15rpx 10rpx;
+        border-bottom:1rpx dashed #999;
+        .list-item-title{
+          font-size:26rpx;
+        }
+        .list-item-time{
+          font-size:24rpx;
+          text-align: right;
+        }
+      }
+    }
   }
 }
 
@@ -114,8 +152,13 @@
             </div>
         </div>
         <div class="content-body">
-            <card text="啊实打实大"></card>
-           
+            <div class="body-title">最新消息一览</div>
+            <div class="body-list">
+              <div class="list-item" v-for="(item,index) in  newsList" :key="index">
+                <div class="list-item-title">{{item.title}}</div>
+                <div class="list-item-time">{{item.time}}</div>
+              </div>
+            </div>
         </div>
     </div>
   </div>
@@ -157,6 +200,18 @@ export default {
         //   name:"活动福利",
         //   img:"/static/imgs/tansuo.png"
         // }
+      ],
+      newsList:[
+        {
+          title:"测试一波",
+          time:"2018-7-20 16:24:32",
+          id:"123"
+        },
+        {
+          title:"测试一波",
+          time:"2018-7-20 16:24:32",
+          id:"123"
+        }
       ]
     }
   },
