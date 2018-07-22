@@ -1,7 +1,20 @@
-<style></style>
+
+<style>
+.card {
+  padding: 10px;
+}
+</style>
 <template>
   <div>
-    我的
+    <p class="card">
+     我的
+    </p>
   </div>
 </template>
-<script></script>
+
+<script>
+export default {
+ 
+}
+</script>
+

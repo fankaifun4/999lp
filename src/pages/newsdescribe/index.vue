@@ -17,7 +17,7 @@
     overflow-x: hidden;
     overflow-y: scroll;
     background-image:linear-gradient(rgba(255,255,255,.5) 50%, rgba(255,255,255,.2));
-    top:150rpx;
+    top:10rpx;
     bottom:30rpx;
     left:30rpx;
     right:30rpx;
@@ -93,12 +93,22 @@
     position: absolute;
     left:-350px;
   }
+  .nav-bt-bg{
+      >img{
+        width:100%;
+        height:150rpx;
+      }
+    }
 </style>
 <template>
 	<div class="inner-bg">
     <div class="container-bg">
       <fix-bg></fix-bg>
+
       <img class="bg-jiul" mode="aspectFit" src="/static/imgs/jiul.png" alt="">
+    </div>
+    <div class="nav-bt-bg">
+      <img mode="center"  src="/static/imgs/nishuihan.png" alt="">
     </div>
     <div class="bg-list">
       <div class="list-box">
