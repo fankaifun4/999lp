@@ -48,6 +48,12 @@
 					"name": "我的",
 					"pathName": "pages/my/main",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "流派",
+					"pathName": "pages/job_style/main",
+					"query": ""
 				}
 			]
 		}
