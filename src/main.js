@@ -21,7 +21,7 @@ export default {
       color:"#fff",
       backgroundColor:"#333",
       position:"bottom",
-      selectedColor:"#ff9900",
+      selectedColor:"#f5573e",
       list: [{
           pagePath: "pages/index/main",
           text: "首页",

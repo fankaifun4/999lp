@@ -33,6 +33,10 @@
 		position:relative;
 		width:750rpx;
 		height:957rpx;
+    .bg_swiper{
+      width:750rpx;
+      height:100%;
+    }
 		.list{
 			width:750rpx;
 			height:957rpx;
@@ -46,7 +50,7 @@
 				z-index:-1;
 			}
 			.discribe{
-				writing-mode: vertical-lr; 
+				writing-mode: vertical-lr;
 				word-wrap: break-word;
 				letter-spacing:2rpx;
 				font-size:42rpx;
@@ -88,28 +92,35 @@
 		<fixbg></fixbg>
 		<img mode="aspectFit" class="lsh" src="/static/imgs/nishuihan.png" alt="">
 		<div class="nav-bar">
-			<div v-for="(item,index) in jobNav" :key="key"  class="nav-item" :class="{active:actived==index}" 
+			<div v-for="(item,index) in jobNav" :key="key"  class="nav-item" :class="{active:actived==index}"
 			@click="getJob(item)">{{item.name}}</div>
 		</div>
 		<div class="bg_list">
-			<div class="list">
-				<img  mode="aspectFit" :src="jobTypeChecked.img" alt="">
-				<div class="discribe">
-					<div class="name">{{jobTypeChecked.name}}</div>
-					<div class="items"> 
-						<div>
-							<div class="weapon">{{jobTypeChecked.weapon}}</div>
-						</div>
-						<div>
-							<div class="position">{{jobTypeChecked.position}}</div>
-						</div>
-						<div>
-							<div class="praise">{{jobTypeChecked.praise}}</div>
-						</div>
-					</div>
-				</div>
-			</div>
+      <swiper :circular="true"  :current="actived" class="bg_swiper" :autoplay="true" :interval="3000" @animationfinish="changeSwiper">
+        <block v-for="(item,index) in jobType" :key="key">
+          <swiper-item>
+            <div class="list">
+              <img  mode="aspectFit" :src="item.img" alt="">
+              <div class="discribe">
+                <div class="name">{{item.name}}</div>
+                <div class="items">
+                  <div>
+                    <div class="weapon">{{item.weapon}}</div>
+                  </div>
+                  <div>
+                    <div class="position">{{item.position}}</div>
+                  </div>
+                  <div>
+                    <div class="praise">{{item.praise}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </swiper-item>
+        </block>
+      </swiper>
 		</div>
+
 	</div>
 </template>
 <script>
@@ -121,6 +132,7 @@
 		data(){
 			return{
 				actived:0,
+
 				jobNav:[
 					{
 						name:"血河",
@@ -190,14 +202,17 @@
 						praise:"●●●稳如泰山，如如不动"
 					}
 				],
-				
+
 			}
 		},
 		methods:{
 			getJob(item){
 				this.actived=item.code
 				this.jobTypeChecked=this.jobType[item.code]
-			}
+			},
+      changeSwiper(e){
+			  console.log(this.actived)
+      }
 		}
 	};
 </script>
