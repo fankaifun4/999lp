@@ -1,29 +1,28 @@
 <style lang="scss" scoped>
   .nav-wrap{
     position: relative;
+    padding-top:20rpx;
     .nav-list {
       font-size:26rpx;
       height:160rpx;
       .nav-item{
         width:150rpx;
         height:150rpx;
-        color:#f5573e;
+        color:#2c2c2c;
         font-weight: 700;
         padding:5rpx;
         overflow: hidden;
         text-align: center;
         >img{
           border-radius: 50%;
-          border:4rpx solid rgba(74,81,110,.5);
-          padding:5rpx;
+          padding:10rpx;
           width:100rpx;
           height:100rpx;
           box-sizing:border-box;
-          background:rgba(245,87,62,.1);
+          background: rgba(200, 200, 200, 0.2);
         }
       }
     }
-    
   }
   .content-body{
     border:15rpx solid rgba(135,51,33,.9);
@@ -69,7 +68,7 @@
 <template>
 <div>
 	<div class="nav-wrap" >
-	    <swiper class="nav-list" :display-multiple-items='5'>
+	    <swiper class="nav-list" :display-multiple-items='items||5'>
 	      <block v-for="(item,index) in navlist" :key="index">
 	        <swiper-item  @click="goPath(item)">
 	           <div class="nav-item" >
@@ -80,29 +79,17 @@
 	      </block>
 	    </swiper>
 	</div>
-	<div class="content-body">
-	    <div class="body-title">最新消息一览</div>
-	    <div class="body-list">
-	      <div class="list-item" v-for="(item,index) in  newsList" :key="index" 
-	      	@click="goNewsPath(item)">
-	        <div class="list-item-title">{{item.title}}</div>
-	      </div>
-	    </div>
-	</div>
 </div>
 </template>
 <script>
 	export default {
-		props:['navlist','newsList'],
+		props:['navlist','newsList','items'],
 		data(){
 			return{}
 		},
 		methods:{
 			goPath(item){
 				this.$emit('goPath',item)
-			},
-			goNewsPath(item){
-				this.$emit('goNewsPath',item)
 			}
 		}
 	}

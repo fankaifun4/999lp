@@ -40,6 +40,7 @@
 		.list{
 			width:750rpx;
 			height:957rpx;
+
 			>img{
 				transform:translateX(-100rpx);
 				position:absolute;
@@ -84,6 +85,16 @@
 				}
 
 			}
+      .job-type{
+        position: absolute;
+        bottom:50rpx;
+        width:100%;
+        height:300rpx;
+        >img{
+          width:100%;
+          height: 100%;
+        }
+      }
 		}
 	}
 </style>
@@ -114,6 +125,9 @@
                     <div class="praise">{{item.praise}}</div>
                   </div>
                 </div>
+              </div>
+              <div class="job-type">
+                <img mode="scaleToFill" :src="item.typeSrc" alt="">
               </div>
             </div>
           </swiper-item>
@@ -155,51 +169,50 @@
 						code:5
 					}
 				],
-				jobTypeChecked:{
-						img:"/static/imgs/xh.png",
-						name:"血河",
-						weapon:"武器●枪",
-						position:"定位●输出●半坦",
-						praise:"●●●百万军中取上将首级，如探囊取物"
-				},
 				jobType:[
 					{
 						img:"/static/imgs/xh.png",
 						name:"血河",
 						weapon:"武器●枪",
 						position:"定位●输出●半坦",
-						praise:"●●●百万军中取上将首级，如探囊取物"
+						praise:"●●●百万军中取上将首级，如探囊取物",
+            typeSrc:"/static/imgs/q.png"
 					},
 					{
 						img:"/static/imgs/sw.png",
 						name:"素问",
 						weapon:"武器●丝带",
 						position:"定位●治疗●辅助",
-						praise:"●●●逃之夭夭，灼灼其华"
+						praise:"●●●逃之夭夭，灼灼其华",
+            typeSrc:"/static/imgs/s.png"
 					},{
 						img:"/static/imgs/jiul.png",
 						name:"九灵",
 						weapon:"武器●蛊灵",
 						position:"定位●输出●召唤",
-						praise:"●●●一顾倾人城，再顾倾人国"
+						praise:"●●●一顾倾人城，再顾倾人国",
+            typeSrc:"/static/imgs/l.png"
 					},{
 						img:"/static/imgs/sm.png",
 						name:"碎梦",
 						weapon:"武器●长刀",
 						position:"定位●输出●刺客",
-						praise:"●●●大漠孤烟直，长河落日圆"
+						praise:"●●●大漠孤烟直，长河落日圆",
+            typeSrc:"/static/imgs/m.png"
 					},{
 						img:"/static/imgs/sx.png",
 						name:"神相",
 						weapon:"武器●琴剑",
 						position:"定位●输出●远程",
-						praise:"●●●谈笑间，樯橹灰飞烟灭"
+						praise:"●●●谈笑间，樯橹灰飞烟灭",
+            typeSrc:"/static/imgs/x.png"
 					},{
 						img:"/static/imgs/ty.png",
 						name:"铁衣",
 						weapon:"武器●全套",
 						position:"定位●输出●坦克",
-						praise:"●●●稳如泰山，如如不动"
+						praise:"●●●稳如泰山，如如不动",
+            typeSrc:"/static/imgs/t.png"
 					}
 				],
 
@@ -211,7 +224,8 @@
 				this.jobTypeChecked=this.jobType[item.code]
 			},
       changeSwiper(e){
-			  console.log(this.actived)
+			  let active= e.target.current
+        this.actived=active
       }
 		}
 	};

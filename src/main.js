@@ -3,7 +3,7 @@ import App from './App'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
-
+import '../static/style/comm.scss'
 const app = new Vue(App)
 app.$mount()
 
@@ -18,10 +18,10 @@ export default {
     'pages/job_style/main'
     ],
     tabBar: {
-      color:"#fff",
-      backgroundColor:"#333",
+      color:"#2c2c2c",
+      backgroundColor:"#c2c2c2",
       position:"bottom",
-      selectedColor:"#f5573e",
+      selectedColor:"#c90915",
       list: [{
           pagePath: "pages/index/main",
           text: "首页",
@@ -35,10 +35,10 @@ export default {
       }]
     },
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#333',
+      backgroundTextStyle: 'black',
+      navigationBarBackgroundColor: '#c2c2c2',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: '#efefef'
+      navigationBarTextStyle: 'black'
     }
   }
 }
