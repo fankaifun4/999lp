@@ -209,9 +209,9 @@
             <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选文章
           </div>
           <div class="list-body">
-            <div class="list" v-for="(item,index) in goodList" :key="key">
+            <div class="list" v-for="(item,index) in goodList" :key="key" @click="golistPath(item)">
               <div class="show-pic">
-                <img :src="item.src" mode="aspectFill" alt="">
+                <img :src="item.src" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
               </div>
               <div class="show-cont">{{item.text}}</div>
             </div>
@@ -247,7 +247,7 @@ export default {
           path:'news/main'
         },
         {
-          name:"玩法解密",
+          name:"玩法整理",
           img:"/static/imgs/qiyu.png",
           path:'task/main'
         },
@@ -345,6 +345,15 @@ export default {
      this.mainController=false
     },
     changeBanner(index){
+
+    },
+    lookoutImg(url){
+      wx.previewImage({
+        current: url,
+        urls:[url]
+      })
+    },
+    golistPath(model){
 
     }
   },

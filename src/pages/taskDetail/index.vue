@@ -34,15 +34,15 @@
 </style>
 
 <template>
-  <div class="container bc-sp">
+  <div class="container bc-sp" >
     <div class="task-top">
-      任务名称
+      {{ taskName }}
     </div>
     <div class="task-content">
       <div class="tast-body">
           <div>
-            <import src="static/towxml/entry.wxml" />
-            <!--<template is="entry" :data="{{...article}}"/>-->
+            <import src="/static/towxml/entry.wxml" />
+            <!--<template is="entry" data="{{...article}}" />-->
           </div>
       </div>
     </div>
@@ -54,11 +54,19 @@
     data(){
       return {
         article:[],
+        taskName:"",
+        _type:'1',
+        _id:1,
         isloading: true,
       }
     },
     created(){
       this.getData()
+    },
+    onLoad(options){
+      this.taskName=options.taskName
+      this._type=options._type
+      this._id=options._id
     },
     computed:{
       towxml(){
@@ -67,10 +75,8 @@
     },
     methods:{
       getData(){
-        let html= this.towxml.toJson('<h1>Article title</h1>');
-        console.log(html)
+        let html= this.towxml.toJson('<h1>Article title asdasdasdasdasdasdasdasdasd</h1>');
         this.article=html
-        console.log( ...this.article )
         this.isloading=false
       }
     }

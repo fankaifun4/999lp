@@ -101,13 +101,13 @@
           </div>
           <div class="nav-wrap">
             <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in taskList" :key="key" @click="goPath(item)">
+              <div class="nav-item" v-for="(item,index) in taskList" :key="key" @click="goPathType(item)">
                 <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
                 <div class="text">{{item.name}}</div>
               </div>
             </div>
             <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in playList" :key="key" @click="goPath(item)">
+              <div class="nav-item" v-for="(item,index) in playList" :key="key" @click="goPathType(item)">
                 <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
                 <div class="text">{{item.name}}</div>
               </div>
@@ -124,14 +124,14 @@
             作者：{{item.name}}
           </div>
           <div class="list-body-items">
-            <div class="task-titles">{{item.title}}</div>
-            <div class="task-show-img">
-              <div class="lg-left" :class="{flex1:item.img.length<2}">
+            <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+            <div class="task-show-img" >
+              <div class="lg-left" :class="{flex1:item.img.length<2}" @click="lookoutImg(item.img[0],item.img)">
                 <img mode="aspectFill" :src="item.img[0]" alt="">
               </div>
               <div class="lg-right" v-if="item.img.length>1">
-                <div class="img-r" :class="{'height-cover':item.img.length==2}" v-if="item.img.length>1"><img  mode="aspectFill" :src="item.img[1]" alt=""></div>
-                <div class="img-r" v-if="item.img.length>2"><img  mode="aspectFill" :src="item.img[2]" alt=""></div>
+                <div class="img-r" :class="{'height-cover':item.img.length==2}" v-if="item.img.length>1"   @click="lookoutImg(item.img[1],item.img)" ><img  mode="aspectFill" :src="item.img[1]" alt=""></div>
+                <div class="img-r" v-if="item.img.length>2"  @click="lookoutImg(item.img[2],item.img)"><img  mode="aspectFill" :src="item.img[2]" alt=""  ></div>
               </div>
             </div>
           </div>
@@ -153,43 +153,54 @@
           {
             name:"奇遇",
             img:"http://img4.imgtn.bdimg.com/it/u=858488715,1255645831&fm=27&gp=0.jpg",
-            path:'taskList/main'
+            path:'taskList/main',
+            _type:1
           },
           {
             name:"探索",
             img:"https://nie.res.netease.com/r/pic/20180620/6ca8c2ab-242d-4d55-9dd6-1fbb1852c2ad.jpg",
-            path:'news/main'
+            path:'strategy/main',
+            _type:2
           }
         ],
         playList:[
           {
             name:"副本攻略",
             img:"https://nie.res.netease.com/r/pic/20180620/02a4a8c4-38b3-43d4-b995-c316ec4534e6.jpg",
-            path:'job_style/main'
+            path:'strategy/main',
+            _type:3
           },
           {
             name:"合成",
             img:"http://img3.imgtn.bdimg.com/it/u=2839431261,3664919764&fm=200&gp=0.jpg",
-            path:'news/main'
+            path:'strategy/main',
+            _type:4
           }
         ],
         playerXd:[
           {
             name:"饭饭",
             title:"逆水寒载酒行者奇遇任务攻略",
+            _id:"11",
+            _type:1,
             img:[
               "http://img.52z.com/upload/news/image/20180612/20180612035819_37029.png",
               "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
+              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png",
+              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
+              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
+              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png"
             ]
           },
           {
             name:"饭饭",
             title:"逆水寒八奇珍宝奇遇任务攻略",
+            _id:"12",
+            _type:1,
             img:[
               "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              // "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              // "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
+              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
+              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
             ]
           }
         ]
@@ -202,9 +213,20 @@
 
     },
     methods:{
-      goPath(model){
+      goPathType(model){
         wx.navigateTo({
-          url:"../"+model.path
+          url:"../"+model.path+'?taskName='+model.name+'&_type='+model._type
+        })
+      },
+      lookoutImg(cur,imgs){
+        wx.previewImage({
+          current:cur,
+          urls:imgs
+        })
+      },
+      goDetailPath(item){
+        wx.navigateTo({
+          url:"/pages/taskDetail/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
         })
       }
     }

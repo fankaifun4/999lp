@@ -1,6 +1,8 @@
 <style lang="scss" scoped>
 .container{
 	overflow:hidden;
+  display:flex;
+  flex-direction: column;
 }
 	.lsh{
 		width: 231rpx;
@@ -134,7 +136,6 @@
         </block>
       </swiper>
 		</div>
-
 	</div>
 </template>
 <script>

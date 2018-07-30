@@ -101,22 +101,22 @@
           {
             time:"18-07-19",
             content:"《逆水寒》更新公告(版本18-07-18-17-34)",
-            id:"1"
+            _id:"1"
           },
           {
             time:"18-07-12",
             content:"《逆水寒》更新公告(版本18-07-11-16-16)",
-            id:"2"
+            _id:"2"
           },
           {
             time:"18-07-06",
             content:"使用外挂创建大量角色非法牟利处罚公告",
-            id:"3"
+            _id:"3"
           },
           {
             time:"18-07-05",
             content:"关于两个BUG的处理公告",
-            id:"4"
+            _id:"4"
           }
         ]
       }
@@ -125,7 +125,7 @@
     methods:{
       goNEW(item){
         wx.navigateTo({
-          url:"/pages/newsdescribe/main"
+          url:"/pages/newsdescribe/main?_id="+item._id
         })
       }
     }
