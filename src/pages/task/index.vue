@@ -101,14 +101,14 @@
           </div>
           <div class="nav-wrap">
             <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in taskList" :key="key">
-                <div class="img"><img mode="scaleToFill" :src="item.img" alt=""></div>
+              <div class="nav-item" v-for="(item,index) in taskList" :key="key" @click="goPath(item)">
+                <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
                 <div class="text">{{item.name}}</div>
               </div>
             </div>
             <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in playList" :key="key">
-                <div class="img"><img mode="scaleToFill" :src="item.img" alt=""></div>
+              <div class="nav-item" v-for="(item,index) in playList" :key="key" @click="goPath(item)">
+                <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
                 <div class="text">{{item.name}}</div>
               </div>
             </div>
@@ -117,11 +117,11 @@
       </div>
       <div class="ct-list">
         <div class="ct-list-header">
-          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 玩家心得
+          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 玩法更新
         </div>
-        <div class="list-body"  v-for="(item,index) in playerXd" :key="key">
+        <div class="list-body"  v-for="(item,index) in playerXd" :key="key" >
           <div class="list-body-title">
-            作者：饭饭
+            作者：{{item.name}}
           </div>
           <div class="list-body-items">
             <div class="task-titles">{{item.title}}</div>
@@ -152,8 +152,8 @@
         taskList:[
           {
             name:"奇遇",
-            img:"https://nie.res.netease.com/r/pic/20180620/02a4a8c4-38b3-43d4-b995-c316ec4534e6.jpg",
-            path:'job_style/main'
+            img:"http://img4.imgtn.bdimg.com/it/u=858488715,1255645831&fm=27&gp=0.jpg",
+            path:'taskList/main'
           },
           {
             name:"探索",
@@ -169,7 +169,7 @@
           },
           {
             name:"合成",
-            img:"https://nie.res.netease.com/r/pic/20180620/6ca8c2ab-242d-4d55-9dd6-1fbb1852c2ad.jpg",
+            img:"http://img3.imgtn.bdimg.com/it/u=2839431261,3664919764&fm=200&gp=0.jpg",
             path:'news/main'
           }
         ],
@@ -202,7 +202,11 @@
 
     },
     methods:{
-
+      goPath(model){
+        wx.navigateTo({
+          url:"../"+model.path
+        })
+      }
     }
   }
 </script>

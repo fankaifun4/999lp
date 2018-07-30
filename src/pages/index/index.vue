@@ -28,7 +28,7 @@
       left:-200rpx;
       bottom: 100rpx;
     }
-   
+
   }
 
 }
@@ -54,7 +54,6 @@
     margin:0 15rpx;
     background: #fff;
     border-radius: 10rpx 10rpx 0 0;
-    height:200rpx;
     overflow: hidden;
     border-bottom:2rpx solid #ccc;
   }
@@ -281,16 +280,16 @@ export default {
       },
       bannerList:[
         {
-          src:'https://nie.res.netease.com/r/pic/20180620/b15fc223-c889-4bcc-a5b8-efcdccbad5d5.jpg',
+          src:'https://n.netease.com/data/attachment/portal/201807/27/133428hcwzowg1e6rrfnwm.jpg',
         },
         {
-          src:'https://nie.res.netease.com/r/pic/20180620/6ae08260-58f1-4ac2-ad12-46a8c3c791a2.jpg',
+          src:'https://n.netease.com/data/attachment/portal/201807/26/170507jp0311eb1qxqfjxl.jpg',
         },
         {
-          src: 'https://nie.res.netease.com/r/pic/20180620/8d5b22c8-e062-4150-9fbd-6fff482c275c.jpg'
+          src: 'https://n.netease.com/data/attachment/portal/201807/26/102109ux9y8o4t54b1vttz.jpg'
         },
         {
-          src: 'https://nie.res.netease.com/r/pic/20180620/1ae0204d-6cd7-4ba7-ae88-b29de10b9bdc.jpg'
+          src: 'https://n.netease.com/data/attachment/portal/201807/25/133236hppw6mll1pzx64n4.png'
         },
         {
           src: 'https://nie.res.netease.com/r/pic/20180620/b5352db9-3508-433f-8320-d9eb64fe4510.jpg'
