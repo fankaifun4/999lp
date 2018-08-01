@@ -1,3 +1,4 @@
+@import "./config.scss";
 *{
   transition: width 2s;
   -moz-transition: width 2s;
@@ -84,11 +85,65 @@ page{
     }
   }
  }
+.task-titles{
+  margin-bottom:10rpx;
+}
+.task-show-img{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-sizing: border-box;
+  .flex1{
+    flex: 1 !important;
+  }
+  .lg-left{
+    flex:.6;
+    height:300rpx;
+    img{
+      width:100%;
+      height:100%;
+    }
+  }
+  .lg-right{
+    flex:.38;
+    height:300rpx;
+    .height-cover{
+      overflow: hidden;
+      height:300rpx !important;
+      >img{
+        width:100%;
+        height:100%;
+      }
+    }
+    .img-r{
+      overflow: hidden;
+      height:145rpx;
+      &:first-child{
+        margin-bottom:10rpx;
+      }
+      >img{
+        width:100%;
+        height:100%;
+      }
+    }
+  }
+}
 .fs-b{
   font-weight: 700;
 }
 .ts-d{
   text-decoration:underline;
 }
+.mr-20{
+  margin-right:20rpx;
+}
+.pd-tb15{
+  padding-top:15rpx;
+  padding-bottom:15rpx;
+}
 
 
+.h2w__p{
+  padding:15rpx 0;
+}

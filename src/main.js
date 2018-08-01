@@ -19,7 +19,8 @@ export default {
       'pages/job_style/main',
       'pages/task/main',
       'pages/taskList/main',
-      'pages/taskDetail/main'
+      'pages/taskDetail/main',
+      'pages/communityDetail/main'
     ],
     tabBar: {
       color:"#2c2c2c",
@@ -49,7 +50,8 @@ export default {
       backgroundTextStyle: 'black',
       navigationBarBackgroundColor: '#c2c2c2',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh:true
     }
   }
 }

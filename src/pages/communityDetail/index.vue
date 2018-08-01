@@ -77,7 +77,10 @@
       overflow-y:scroll;
     }
   }
-
+  .h10000{
+    height:10000rpx;
+    background: $black_z;
+  }
   .fixed-btn{
     border-top:1px solid #c2c2c2;
     display: flex;
@@ -116,14 +119,6 @@
       }
     }
   }
-  .entry-view{
-    padding:15rpx;
-    img{
-      max-width:90%;
-      margin:0 auto;
-    }
-  }
-
 </style>
 
 <template>
@@ -144,7 +139,7 @@
     </div>
     <div class="task-content">
       <div class="tast-body">
-        <div class="entry-view">
+        <div>
           <import src="/static/towxml/entry.wxml" />
           <template is="entry" data="{{...article}}" />
         </div>
