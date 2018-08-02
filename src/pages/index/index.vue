@@ -1,15 +1,4 @@
 <style lang="scss" scoped>
-.container{
-  position:relative;
-  background:#efefef;
-  .nav-bt-bg{
-    >img{
-      width:100%;
-      height:150rpx;
-    }
-  }
-}
-
 .mg-t18{
   margin-top: 18rpx;
 }
@@ -144,55 +133,58 @@
 </style>
 <template>
   <div class="container">
-    <div class="index-wrap" >
-      <div class="banner">
-        <banner :imgData="bannerList" @change="changeBanner"  >
-        </banner>
-      </div>
-      <div class="index-nav">
-        <index-dom
-          :navlist="indexNavlist"
-          @goPath="goPath"
-          @goNewsPath="goNewsPath">
-        </index-dom>
-        <div class="hr"></div>
-      </div>
-      <div class="content" style="margin-top:-70rpx;">
-        <div class="content-list">
-          <div class="list-header">
-            <img class="icon" src="/static/imgs/remen.png" alt="">热门推荐
-          </div>
-          <div class ="list-body">
-            <div class="show-top">
-              <img mode="aspectFill" src="http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg" alt="">
+    <div class=" scroll-wrap">
+      <div class="index-wrap" >
+        <div class="banner">
+          <banner :imgData="bannerList" @change="changeBanner"  >
+          </banner>
+        </div>
+        <div class="index-nav">
+          <index-dom
+            :navlist="indexNavlist"
+            @goPath="goPath"
+            @goNewsPath="goNewsPath">
+          </index-dom>
+          <div class="hr"></div>
+        </div>
+        <div class="content" style="margin-top:-70rpx;">
+          <div class="content-list">
+            <div class="list-header">
+              <img class="icon" src="/static/imgs/remen.png" alt="">热门推荐
             </div>
-            <div class="show-bottom">
-              <div class="show-list">
-                <img src="http://img.newyx.net/article/image/201806/15/d578b68836.png" alt="">
+            <div class ="list-body">
+              <div class="show-top">
+                <img mode="aspectFill" src="http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg" alt="">
               </div>
-              <div class="show-list">
-                <img src="http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg" alt="">
+              <div class="show-bottom">
+                <div class="show-list">
+                  <img src="http://img.newyx.net/article/image/201806/15/d578b68836.png" alt="">
+                </div>
+                <div class="show-list">
+                  <img src="http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg" alt="">
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="content">
-        <div class="content-list">
-          <div class="list-header">
-            <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选文章
-          </div>
-          <div class="list-body">
-            <div class="list" v-for="(item,index) in goodList" :key="key" @click="golistPath(item)">
-              <div class="show-pic">
-                <img :src="item.src" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
+        <div class="content">
+          <div class="content-list">
+            <div class="list-header">
+              <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选文章
+            </div>
+            <div class="list-body">
+              <div class="list" v-for="(item,index) in goodList" :key="key" @click="golistPath(item)">
+                <div class="show-pic">
+                  <img :src="item.src" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
+                </div>
+                <div class="show-cont">{{item.text}}</div>
               </div>
-              <div class="show-cont">{{item.text}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 <script>

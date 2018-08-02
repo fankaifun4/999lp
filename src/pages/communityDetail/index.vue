@@ -70,6 +70,7 @@
     overflow: hidden;
     flex: 1;
     border:1rpx solid #c9c9c9;
+    min-height: 200rpx;
     .tast-body{
       position: relative;
       width:100%;

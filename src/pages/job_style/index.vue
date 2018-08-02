@@ -172,7 +172,7 @@
 				],
 				jobType:[
 					{
-						img:"http://212.64.19.161/images/nishuihan/xh.png",
+						img:"http://212.64.19.161/static/images/nishuihan/xh.png",
 						name:"血河",
 						weapon:"武器●枪",
 						position:"定位●输出●半坦",
@@ -180,35 +180,35 @@
             typeSrc:"https://n.res.netease.com/pc/fab/20180611102737/img/inner_j_pic_6_27f05f8.png"
 					},
 					{
-						img:"http://212.64.19.161/images/nishuihan/sw.png",
+						img:"http://212.64.19.161/static/images/nishuihan/sw.png",
 						name:"素问",
 						weapon:"武器●丝带",
 						position:"定位●治疗●辅助",
 						praise:"●●●逃之夭夭，灼灼其华",
             typeSrc:"/static/imgs/s.png"
 					},{
-						img:"http://212.64.19.161/images/nishuihan/jl.png",
+						img:"http://212.64.19.161/static/images/nishuihan/jl.png",
 						name:"九灵",
 						weapon:"武器●蛊灵",
 						position:"定位●输出●召唤",
 						praise:"●●●一顾倾人城，再顾倾人国",
             typeSrc:"/static/imgs/l.png"
 					},{
-						img:"http://212.64.19.161/images/nishuihan/sm.png",
+						img:"http://212.64.19.161/static/images/nishuihan/sm.png",
 						name:"碎梦",
 						weapon:"武器●长刀",
 						position:"定位●输出●刺客",
 						praise:"●●●大漠孤烟直，长河落日圆",
             typeSrc:"/static/imgs/m.png"
 					},{
-						img:"http://212.64.19.161/images/nishuihan/sx.png",
+						img:"http://212.64.19.161/static/images/nishuihan/sx.png",
 						name:"神相",
 						weapon:"武器●琴剑",
 						position:"定位●输出●远程",
 						praise:"●●●谈笑间，樯橹灰飞烟灭",
             typeSrc:"/static/imgs/x.png"
 					},{
-						img:"http://212.64.19.161/images/nishuihan/ty.png",
+						img:"http://212.64.19.161/static/images/nishuihan/ty.png",
 						name:"铁衣",
 						weapon:"武器●全套",
 						position:"定位●输出●坦克",

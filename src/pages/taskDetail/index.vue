@@ -15,6 +15,8 @@
     align-items: center;
     padding:15rpx;
     box-sizing: border-box;
+    height:150rpx;
+    flex-shrink: 0;
     .user{
       display: flex;
       justify-content: flex-start;
@@ -83,9 +85,10 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    align-items: center;
+    align-items: flex-start;
     padding:15rpx;
     background: #fff;
+    flex-shrink: 0;
     .long{
       display: flex;
       .comment{
@@ -93,6 +96,13 @@
         height:60rpx;
         padding:0 15rpx;
         width:495rpx;
+        margin-right:15rpx;
+      }
+      .input-text{
+        padding:15rpx;
+        height:150rpx;
+        width:495rpx;
+        box-sizing: border-box;
         margin-right:15rpx;
       }
       .sendMsg{
@@ -124,6 +134,10 @@
     }
   }
 
+  .height10000{
+    height:5000rpx;
+  }
+
 </style>
 
 <template>
@@ -147,6 +161,7 @@
         <div class="entry-view">
           <!--<import src="/static/towxml/entry.wxml" />-->
           <!--<template is="entry" data="{{...article}}" />-->
+          <div class="height10000"></div>
         </div>
       </div>
     </div>
@@ -155,8 +170,9 @@
         <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
       </div>
       <div class="long">
-        <input type="text"  class="comment" v-model="comment" >
-        <button class="sendMsg enabled">发送</button>
+        <input type="text" v-if="!insertData" v-model="comment"  class="comment"  >
+        <button class="sendMsg" v-if="comment.length<1">发送</button>
+        <button class="sendMsg enabled" v-else @click="sendMsg">发送</button>
       </div>
     </div>
   </div>
@@ -172,7 +188,8 @@
         _id:1,
         isloading: true,
         comment:"",
-        userInfo:null
+        userInfo:null,
+        insertData:false
       }
     },
     created(){
@@ -195,6 +212,9 @@
         let html= this.towxml.toJson(template);
         this.article=html
         this.isloading=false
+      },
+      sendMsg(){
+        console.log(this.comment)
       }
     }
   }
