@@ -1,7 +1,6 @@
 <style lang="scss" scoped>
 .container{
   position:relative;
-  overflow: hidden;
   background:#efefef;
   .nav-bt-bg{
     >img{
@@ -9,28 +8,6 @@
       height:150rpx;
     }
   }
-  .container-bg{
-    position: absolute;
-    z-index: -1;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    .body-bg{
-      position:absolute;
-      width:100%;
-      height:100%;
-    }
-    .body-mm{
-      position:absolute;
-      width:750rpx;
-      height:957rpx;
-      left:-200rpx;
-      bottom: 100rpx;
-    }
-
-  }
-
 }
 
 .mg-t18{
@@ -39,11 +16,8 @@
 .index-wrap{
   position: relative;
   z-index: 2;
-  width:100%;
-  height:100%;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
   display: block;
   .banner{
     background:#fff;

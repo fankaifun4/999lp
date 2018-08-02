@@ -3,6 +3,7 @@
 	overflow:hidden;
   display:flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 	.lsh{
 		width: 231rpx;
@@ -33,6 +34,7 @@
 	}
 	.bg_list{
 		position:relative;
+    margin-top:100rpx;
 		width:750rpx;
 		height:957rpx;
     .bg_swiper{
@@ -42,9 +44,7 @@
 		.list{
 			width:750rpx;
 			height:957rpx;
-
 			>img{
-				transform:translateX(-100rpx);
 				position:absolute;
 				left:0;
 				top:0;
@@ -109,12 +109,12 @@
 			@click="getJob(item)">{{item.name}}</div>
 		</div>
 		<div class="bg_list">
-      <swiper :circular="true"  :current="actived" class="bg_swiper" :autoplay="true" :interval="3000" @animationfinish="changeSwiper">
+      <swiper :circular="true"  :current="actived" class="bg_swiper" :autoplay="auto" :interval="3000" @animationfinish="changeSwiper">
         <block v-for="(item,index) in jobType" :key="key">
           <swiper-item>
             <div class="list">
               <img  mode="aspectFit" :src="item.img" alt="">
-              <div class="discribe">
+              <div class="discribe" style="display: none">
                 <div class="name">{{item.name}}</div>
                 <div class="items">
                   <div>
@@ -129,7 +129,7 @@
                 </div>
               </div>
               <div class="job-type">
-                <img mode="scaleToFill" :src="item.typeSrc" alt="">
+                <!--<img mode="scaleToFill" :src="item.typeSrc" alt="">-->
               </div>
             </div>
           </swiper-item>
@@ -172,43 +172,43 @@
 				],
 				jobType:[
 					{
-						img:"/static/imgs/xh.png",
+						img:"http://212.64.19.161/images/nishuihan/xh.png",
 						name:"血河",
 						weapon:"武器●枪",
 						position:"定位●输出●半坦",
 						praise:"●●●百万军中取上将首级，如探囊取物",
-            typeSrc:"/static/imgs/q.png"
+            typeSrc:"https://n.res.netease.com/pc/fab/20180611102737/img/inner_j_pic_6_27f05f8.png"
 					},
 					{
-						img:"/static/imgs/sw.png",
+						img:"http://212.64.19.161/images/nishuihan/sw.png",
 						name:"素问",
 						weapon:"武器●丝带",
 						position:"定位●治疗●辅助",
 						praise:"●●●逃之夭夭，灼灼其华",
             typeSrc:"/static/imgs/s.png"
 					},{
-						img:"/static/imgs/jiul.png",
+						img:"http://212.64.19.161/images/nishuihan/jl.png",
 						name:"九灵",
 						weapon:"武器●蛊灵",
 						position:"定位●输出●召唤",
 						praise:"●●●一顾倾人城，再顾倾人国",
             typeSrc:"/static/imgs/l.png"
 					},{
-						img:"/static/imgs/sm.png",
+						img:"http://212.64.19.161/images/nishuihan/sm.png",
 						name:"碎梦",
 						weapon:"武器●长刀",
 						position:"定位●输出●刺客",
 						praise:"●●●大漠孤烟直，长河落日圆",
             typeSrc:"/static/imgs/m.png"
 					},{
-						img:"/static/imgs/sx.png",
+						img:"http://212.64.19.161/images/nishuihan/sx.png",
 						name:"神相",
 						weapon:"武器●琴剑",
 						position:"定位●输出●远程",
 						praise:"●●●谈笑间，樯橹灰飞烟灭",
             typeSrc:"/static/imgs/x.png"
 					},{
-						img:"/static/imgs/ty.png",
+						img:"http://212.64.19.161/images/nishuihan/ty.png",
 						name:"铁衣",
 						weapon:"武器●全套",
 						position:"定位●输出●坦克",

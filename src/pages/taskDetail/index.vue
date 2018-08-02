@@ -145,8 +145,8 @@
     <div class="task-content">
       <div class="tast-body">
         <div class="entry-view">
-          <import src="/static/towxml/entry.wxml" />
-          <template is="entry" data="{{...article}}" />
+          <!--<import src="/static/towxml/entry.wxml" />-->
+          <!--<template is="entry" data="{{...article}}" />-->
         </div>
       </div>
     </div>
