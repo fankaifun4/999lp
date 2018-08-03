@@ -43,7 +43,7 @@
     }
   }
   .task-titles{
-      margin-bottom:10rpx;
+      margin-bottom:15rpx;
   }
   .task-show-img{
     display: flex;

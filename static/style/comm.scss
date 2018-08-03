@@ -1,11 +1,5 @@
 @import "./config.scss";
-*{
-  transition: width 2s;
-  -moz-transition: width 2s;
-  -webkit-transition: width 2s;
-  -o-transition: width 2s;
-  box-sizing:border-box;
-}
+
 page{
   height: 100%;
   width:100%;
@@ -13,7 +7,6 @@ page{
   font-size:28rpx;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 .container {
   box-sizing: border-box;

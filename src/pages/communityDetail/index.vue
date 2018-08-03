@@ -15,6 +15,8 @@
     align-items: center;
     padding:15rpx;
     box-sizing: border-box;
+    height:150rpx;
+    flex-shrink: 0;
     .user{
       display: flex;
       justify-content: flex-start;
@@ -65,22 +67,21 @@
     }
   }
   .task-content{
-    margin:15rpx;
     background:#fff;
-    overflow: hidden;
-    flex: 1;
     border:1rpx solid #c9c9c9;
-    min-height: 200rpx;
+    margin:15rpx;
+    padding:15rpx;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
     .tast-body{
       position: relative;
-      width:100%;
-      height:100%;
-      overflow-y:scroll;
+      box-sizing: border-box;
+      .rich-cont{
+        line-height: 60rpx;
+        font-size: 28rpx;
+      }
     }
-  }
-  .h10000{
-    height:10000rpx;
-    background: $black_z;
   }
   .fixed-btn{
     border-top:1px solid #c2c2c2;
@@ -90,6 +91,8 @@
     align-items: center;
     padding:15rpx;
     background: #fff;
+    height:100rpx;
+    flex-shrink: 0;
     .long{
       display: flex;
       .comment{
@@ -120,10 +123,11 @@
       }
     }
   }
+
 </style>
 
 <template>
-  <div class="container bc-sp" >
+  <div class="bc-sp" >
     <div class="task-top">
       <div class="user">
         <img class="avatar" src="/static/imgs/qiyu_logo.jpg" alt="">
@@ -140,10 +144,7 @@
     </div>
     <div class="task-content">
       <div class="tast-body">
-        <div>
-          <!--<import src="/static/towxml/entry.wxml" />-->
-          <!--<template is="entry" data="{{...article}}" />-->
-        </div>
+          <rich-text :nodes="article" type="node" class="rich-cont"></rich-text>
       </div>
     </div>
     <div class="fixed-btn">
@@ -158,7 +159,6 @@
   </div>
 </template>
 <script>
-  import towxml from '../../../static/towxml/main'
   export default {
     data(){
       return {
@@ -181,15 +181,33 @@
       this.userInfo=wx.getStorageSync('userInfo')
     },
     computed:{
-      towxml(){
-        return new towxml()
-      }
     },
     methods:{
       getData(){
-        let template=`<p style="text-align: center;"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144364562&di=06fde70328cbba27a1cb9f4a1d243b9a&imgtype=0&src=http%3A%2F%2Fp5.qhimg.com%2Ft013b2a0ad9867d0a0c.jpg%3Fsize%3D2880x1920"/></p><p><br/></p><p><br/></p><p style="text-align: center;">享受风雨给予的坚强</p><p style="text-align: center;">含着泪细念婆娑仰望</p><p style="text-align: center;">踌躇与路放之间浅着一声轻盈</p><p style="text-align: center;">那是说走就走的旅行</p><p style="text-align: center;">固执与释然之间锁着一次酩酊</p><p style="text-align: center;">只觉宿人醉而我独醒</p><p style="text-align: center;">孤调与琳琅之间拘着一扇心境</p><p style="text-align: center;">映照着我们纯粹魂灵</p><p style="text-align: center;">不安与落定之间飘着一封书信</p><p style="text-align: center;">故乡等待着我的归期</p><p style="text-align: center;">带上心中的诗 飞向远方</p><p style="text-align: center;"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144630413&di=e157267cfe85f0a834eac1bae3f276d9&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201202%2F05%2F20120205092808_satSd.jpg"/></p><p><br/></p><p><br/></p><p style="text-align: center;">未曾与你相遇便让我无尽的痛苦</p><p style="text-align: center;">时常一无所获只因这满身的惆怅</p><p style="text-align: center;">总是苦苦追寻却还是孤独在路旁</p><p style="text-align: center;">不想诗和远方依旧还停泊在过往</p><p style="text-align: center;"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144630412&di=a9f3967b4081a428a939d76a4447dbd7&imgtype=0&src=http%3A%2F%2Fimg5q.duitang.com%2Fuploads%2Fitem%2F201404%2F10%2F20140410095926_zLTWY.jpeg"/></p><p><br/></p>`
-        let html= this.towxml.toJson(template);
-        this.article=html
+        let template=`
+            <p style="text-align: center;"><img  style="width:300px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144364562&di=06fde70328cbba27a1cb9f4a1d243b9a&imgtype=0&src=http%3A%2F%2Fp5.qhimg.com%2Ft013b2a0ad9867d0a0c.jpg%3Fsize%3D2880x1920"/></p>
+            <p style="text-align: center;">享受风雨给予的坚强</p>
+            <p style="text-align: center;">含着泪细念婆娑仰望</p>
+            <p style="text-align: center;">踌躇与路放之间浅着一声轻盈</p>
+            <p style="text-align: center;">那是说走就走的旅行</p>
+            <p style="text-align: center;">固执与释然之间锁着一次酩酊</p>
+            <p style="text-align: center;">只觉宿人醉而我独醒</p>
+            <p style="text-align: center;">孤调与琳琅之间拘着一扇心境</p>
+            <p style="text-align: center;">映照着我们纯粹魂灵</p>
+            <p style="text-align: center;">不安与落定之间飘着一封书信</p>
+            <p style="text-align: center;">故乡等待着我的归期</p>
+            <p style="text-align: center;">带上心中的诗 飞向远方</p>
+            <p style="text-align: center;"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144630413&di=e157267cfe85f0a834eac1bae3f276d9&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201202%2F05%2F20120205092808_satSd.jpg"/></p>
+            <p style="text-align: center;">未曾与你相遇便让我无尽的痛苦</p>
+            <p style="text-align: center;">时常一无所获只因这满身的惆怅</p>
+            <p style="text-align: center;">总是苦苦追寻却还是孤独在路旁</p>
+            <p style="text-align: center;">不想诗和远方依旧还停泊在过往</p>
+            <p style="text-align: center;"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533144630412&di=a9f3967b4081a428a939d76a4447dbd7&imgtype=0&src=http%3A%2F%2Fimg5q.duitang.com%2Fuploads%2Fitem%2F201404%2F10%2F20140410095926_zLTWY.jpeg"/></p>
+          `
+        const regex = new RegExp('<img', 'gi');
+        template = template.replace(regex, `<img style="max-width: 100%;"`);
+
+        this.article=template
         this.isloading=false
       }
     }

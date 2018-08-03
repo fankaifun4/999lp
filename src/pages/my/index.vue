@@ -22,6 +22,7 @@
   }
   .list-shequ{
     padding:15rpx 20rpx;
+    height: 80rpx;
     border-bottom:1rpx solid #efefef;
     display: flex;
     justify-content: flex-start;
@@ -48,24 +49,32 @@
         </div>
         <div class="list-body">
           <div class="list-shequ">
-            <img class="icon" src="/static/imgs/icon/icon_rw.png" alt="">
-            <div>我的任务</div>
+            <img class="icon"  src="/static/imgs/icon/icon_gz.png" alt="">
+            <div>我的关注</div>
           </div>
+          <div class="list-shequ">
+            <img class="icon"  src="/static/imgs/icon/icon_sw.png" alt="">
+            <div>我的食谱</div>
+          </div>
+          <!--<div class="list-shequ">-->
+            <!--<img class="icon" src="/static/imgs/icon/icon_rw.png" alt="">-->
+            <!--<div>我的任务</div>-->
+          <!--</div>-->
           <div class="list-shequ">
             <img class="icon"  src="/static/imgs/icon/icon_msg.png" alt="">
             <div>我的消息</div>
           </div>
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_tz.png" alt="">
-            <div>我的帖子</div>
-          </div>
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_st.png" alt="">
-            <div>我的社团</div>
-          </div>
+          <!--<div class="list-shequ">-->
+            <!--<img class="icon"  src="/static/imgs/icon/icon_tz.png" alt="">-->
+            <!--<div>我的帖子</div>-->
+          <!--</div>-->
+          <!--<div class="list-shequ">-->
+            <!--<img class="icon"  src="/static/imgs/icon/icon_st.png" alt="">-->
+            <!--<div>我的社团</div>-->
+          <!--</div>-->
         </div>
       </div>
-      <div class="ct-list">
+      <div class="ct-list" v-if="false">
         <div class="ct-list-header">
           我的服务
         </div>

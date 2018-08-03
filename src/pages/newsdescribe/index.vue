@@ -104,8 +104,6 @@
 	<div class="inner-bg">
     <div class="container-bg">
       <fix-bg></fix-bg>
-
-      <img class="bg-jiul" mode="aspectFit" src="/static/imgs/jiul.png" alt="">
     </div>
     <div class="nav-bt-bg">
       <img mode="center"  src="/static/imgs/nishuihan.png" alt="">
