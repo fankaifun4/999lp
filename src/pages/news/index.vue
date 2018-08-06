@@ -42,28 +42,33 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
     <div class="head">新闻资讯</div>
     <div class="bg-list scroll-wrap">
       <div class="news-list">
-          <div class="new-list-sroll">
-            <div class="news-li" v-for="(item,index) in newsList" :key="index" @click="goNEW(item)">
+        <no-data v-if="hsNoData"></no-data>
+        <div class="new-list-sroll" v-else>
+          <div class="news-li" v-for="(item,index) in newsList" :key="index" @click="goNEW(item)">
             <div class="news-li-content">{{item.content}}</div>
             <div class="news-li-time">{{item.time}}</div>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
 </template>
 <script>
   import fixBg from '@/components/fixbg'
+  import noData from '@/components/noData'
   export default{
     components:{
-      fixBg
+      fixBg,
+      noData
     },
     data(){
       return{
+        hsNoData:false,
         newsList:[
           {
             time:"18-07-19",
@@ -74,75 +79,25 @@
             time:"18-07-12",
             content:"《逆水寒》更新公告(版本18-07-11-16-16)",
             _id:"2"
-          },
-          {
-            time:"18-07-06",
-            content:"使用外挂创建大量角色非法牟利处罚公告",
-            _id:"3"
-          },
-          {
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },
-          {
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
-          },{
-            time:"18-07-05",
-            content:"关于两个BUG的处理公告",
-            _id:"4"
           }
         ]
       }
     },
-    mounted(){},
+    mounted(){
+      this.getData()
+    },
     methods:{
       goNEW(item){
         wx.navigateTo({
           url:"/pages/newsdescribe/main?_id="+item._id
         })
+      },
+      getData(){
+        if(this.newsList.length>0){
+
+        }else{
+          this.hsNoData=true
+        }
       }
     }
   }

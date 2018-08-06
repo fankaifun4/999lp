@@ -43,7 +43,7 @@
     }
   }
   .task-titles{
-      margin-bottom:15rpx;
+    margin-bottom:15rpx;
   }
   .task-show-img{
     display: flex;
@@ -96,32 +96,32 @@
     </div>
     <div class="ct-b">
       <div class="ct-list">
-          <div class="ct-list-header">
-            <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 玩法
-          </div>
-          <div class="nav-wrap">
-            <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in taskList" :key="index" @click="goPathType(item)">
-                <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
-                <div class="text">{{item.name}}</div>
-              </div>
-            </div>
-            <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in playList" :key="index" @click="goPathType(item)">
-                <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
-                <div class="text">{{item.name}}</div>
-              </div>
+        <div class="ct-list-header">
+          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> {{ hotName }}
+        </div>
+        <div class="nav-wrap">
+          <div class="nav-list">
+            <div class="nav-item" v-for="(item,index) in taskList" :key="index" @click="goDetailPath(item)">
+              <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
+              <div class="text">{{item.name}}</div>
             </div>
           </div>
-          <div class="hr"></div>
+          <div class="nav-list">
+            <div class="nav-item" v-for="(item,index) in playList" :key="index" @click="goDetailPath(item)">
+              <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
+              <div class="text">{{item.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="hr"></div>
       </div>
       <div class="ct-list">
         <div class="ct-list-header">
-          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 玩法更新
+          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> {{ playListName }}
         </div>
         <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
           <div class="list-body-title">
-            作者：{{item.name}}
+            来自：{{item.name}}
           </div>
           <div class="list-body-items">
             <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
@@ -163,20 +163,6 @@
             _type:2
           }
         ],
-        playList:[
-          {
-            name:"副本攻略",
-            img:"https://nie.res.netease.com/r/pic/20180620/02a4a8c4-38b3-43d4-b995-c316ec4534e6.jpg",
-            path:'strategy/main',
-            _type:3
-          },
-          {
-            name:"合成",
-            img:"http://img3.imgtn.bdimg.com/it/u=2839431261,3664919764&fm=200&gp=0.jpg",
-            path:'strategy/main',
-            _type:4
-          }
-        ],
         playerXd:[
           {
             name:"饭饭",
@@ -203,7 +189,9 @@
               "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
             ]
           }
-        ]
+        ],
+        hotName:"最新活动",
+        playListName:"活动列表"
       }
     },
     create(){
@@ -213,11 +201,6 @@
 
     },
     methods:{
-      goPathType(model){
-        wx.navigateTo({
-          url:"../"+model.path+'?taskName='+model.name+'&_type='+model._type
-        })
-      },
       lookoutImg(cur,imgs){
         wx.previewImage({
           current:cur,
@@ -226,7 +209,7 @@
       },
       goDetailPath(item){
         wx.navigateTo({
-          url:"/pages/taskDetail/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
+          url:"/pages/activity/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
         })
       }
     }

@@ -54,7 +54,7 @@
         margin-bottom: 20rpx;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         .show-pic{
           width:220rpx;
           height:150rpx;
@@ -136,8 +136,7 @@
     <div class=" scroll-wrap">
       <div class="index-wrap" >
         <div class="banner">
-          <banner :imgData="bannerList" @change="changeBanner"  >
-          </banner>
+          <banner :imgData="bannerList" @change="changeBanner"  ></banner>
         </div>
         <div class="index-nav">
           <index-dom
@@ -158,26 +157,31 @@
               </div>
               <div class="show-bottom">
                 <div class="show-list">
-                  <img src="http://img.newyx.net/article/image/201806/15/d578b68836.png" alt="">
+                  <img mode="aspectFill" src="http://img.newyx.net/article/image/201806/15/d578b68836.png" alt="">
                 </div>
                 <div class="show-list">
-                  <img src="http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg" alt="">
+                  <img mode="aspectFill" src="http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg" alt="">
                 </div>
               </div>
             </div>
           </div>
+           <div class="hr"></div>
         </div>
         <div class="content">
           <div class="content-list">
             <div class="list-header">
               <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选文章
             </div>
-            <div class="list-body">
-              <div class="list" v-for="(item,index) in goodList" :key="key" @click="golistPath(item)">
+            <no-data v-if="nodata"></no-data>
+            <div v-else class="list-body">
+              <div class="list" v-for="(item,index) in goodList" :key="index" @click="golistPath(item)">
                 <div class="show-pic">
                   <img :src="item.src" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
                 </div>
-                <div class="show-cont">{{item.text}}</div>
+                <div class="show-cont">
+                  <div> {{item.title}} </div>
+                  <div> {{item.text}} </div>
+                </div>
               </div>
             </div>
           </div>
@@ -190,54 +194,42 @@
 <script>
 import indexDom from '@/components/main/index'
 import banner from '@/components/banner'
-
+import noData from '@/components/noData'
 export default {
   components:{
     indexDom,
-    banner
+    banner,
+    noData
   },
   data () {
     return {
-      motto: 'Hello World',
       userInfo: {},
-      mainController:false,
+      nodata:false,
       indexNavlist:[
         {
           name:"职业流派",
           img:"/static/imgs/zhuxian.png",
-          path:'job_style/main'
+          path:'/pages/job_style/main'
         },
         {
           name:"新闻动态",
           img:"/static/imgs/zhixian.png",
-          path:'news/main'
+          path:'/pages/news/main'
         },
         {
           name:"玩法整理",
           img:"/static/imgs/qiyu.png",
-          path:'task/main'
+          path:'/pages/task/main'
         },
         {
           name:"装备展台",
-          img:"/static/imgs/yaji.png"
+          img:"/static/imgs/yaji.png",
+          path:'/pages/slitTask/main'
         },
         {
           name:"活动福利",
-          img:"/static/imgs/tansuo.png"
-        }
-      ],
-      toView: 'red',
-      scrollTop: 100,
-      indexNewsList:[
-        {
-          title:"测试一波",
-          time:"2018-7-20 16:24:32",
-          id:"123"
-        },
-        {
-          title:"测试一波",
-          time:"2018-7-20 16:24:32",
-          id:"123"
+          img:"/static/imgs/tansuo.png",
+          path:'/pages/activityList/main'
         }
       ],
       userInfo:{
@@ -267,19 +259,37 @@ export default {
       goodList:[
         {
           src:"http://www.xinshoucun.com/c/d/file/2018-06-18_f/f6aecc4350e1bfb2b19af47d8235a20a.jpg",
-          text:"水天相接，晨雾蒙蒙笼云涛。银河欲转，千帆如梭逐浪飘。梦魂仿佛回天庭，天帝传话善相邀。殷勤问：归宿何处请相告。"
+          text:"水天相接，晨雾蒙蒙笼云涛。银河欲转，千帆如梭逐浪飘。梦魂仿佛回天庭，天帝传话善相邀。殷勤问：归宿何处请相告。",
+          _type:"2",
+          _id:"1",
+          title:'阿萨德'
         },{
           src:"http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg",
-          text:"清明时节，春光满地，熏风洋洋。 玉炉中的残烟依旧飘送出醉人的清香。 午睡醒来，头戴的花钿落在枕边床上。"
+          text:"清明时节，春光满地，熏风洋洋。 玉炉中的残烟依旧飘送出醉人的清香。 午睡醒来，头戴的花钿落在枕边床上。",
+          _type:"2",
+          _id:"2",
+          title:'我去额'
         },{
           src:"http://www.5mouse.com/uploads/fetcher/20160902105211.jpg",
-          text:"纷纷坠叶飘香砌。夜寂静，寒声碎。真珠帘卷玉楼空，天淡银河垂地。年年今夜，月华如练，长是人千里。"
+          text:"纷纷坠叶飘香砌。夜寂静，寒声碎。真珠帘卷玉楼空，天淡银河垂地。年年今夜，月华如练，长是人千里。",
+          _type:"2",
+          _id:"3",
+          title:'续暗示'
         }
       ]
     }
   },
-
+  mounted(){
+    this.getData()
+  },
   methods: {
+    getData(){
+      if(this.goodList.length){
+        this.nodata=false
+      }else{
+        this.nodata=true
+      }
+    },
     bindViewTap () {
       const url = '../logs/main'
       wx.navigateTo({ url })
@@ -299,17 +309,12 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     goPath(model){
-      let path='../'+model.path
+      let url=model.path
       wx.navigateTo({
-        url:path
+        url
       })
     },
-    goPathIndex(){
-     this.mainController=true
-    },
-    goPathMain(){
-     this.mainController=false
-    },
+    
     changeBanner(index){
 
     },
@@ -320,7 +325,9 @@ export default {
       })
     },
     golistPath(model){
-
+      wx.navigateTo({
+        url:'/pages/articleList/main?_id='+model._id+'&_type='+model._type
+      })
     }
   },
   created () {

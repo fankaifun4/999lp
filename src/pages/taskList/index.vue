@@ -25,7 +25,7 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（小吉）
         </div>
-        <div class="list-body" v-for="item in taskXList" :key="key" >
+        <div class="list-body" v-for="(item,index) in taskXList" :key="index" >
           <div class="list-body-title fs-b ts-d" @click="toDetail(item)">
             {{item.name}}
           </div>
@@ -44,7 +44,7 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（中吉）
         </div>
-        <div class="list-body" v-for="item in taskZList" :key="key" >
+        <div class="list-body" v-for="(item,index) in taskZList" :key="index" >
           <div class="list-body-title fs-b ts-d" @click="toDetail(item)">
 
             {{item.name}}
@@ -64,7 +64,7 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（大吉，旷世）
         </div>
-        <div class="list-body" v-for="item in taskDList" :key="key" >
+        <div class="list-body" v-for="(item,index) in taskDList" :key="index" >
           <div class="list-body-title fs-b ts-d"  @click="toDetail(item)">
             {{item.name}}
           </div>

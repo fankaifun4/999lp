@@ -2,8 +2,7 @@
 .container{
 	overflow:hidden;
   display:flex;
-  flex-direction: column;
-  justify-content: space-between;
+	background: #fff;
 }
 	.lsh{
 		width: 231rpx;
@@ -27,7 +26,7 @@
 			flex:1;
 			text-align:	center;
 			&.active{
-				background:rgba(121,141,171,.9);
+				background:rgba(121,141,171,1);
 				color:#fff;
 			}
 		}
@@ -102,15 +101,14 @@
 </style>
 <template>
 	<div class="container">
-		<fixbg></fixbg>
 		<img mode="aspectFit" class="lsh" src="/static/imgs/nishuihan.png" alt="">
 		<div class="nav-bar">
-			<div v-for="(item,index) in jobNav" :key="key"  class="nav-item" :class="{active:actived==index}"
+			<div v-for="(item,index) in jobNav" :key="index"  class="nav-item" :class="{active:actived==index}"
 			@click="getJob(item)">{{item.name}}</div>
 		</div>
 		<div class="bg_list">
       <swiper :circular="true"  :current="actived" class="bg_swiper" :autoplay="auto" :interval="3000" @animationfinish="changeSwiper">
-        <block v-for="(item,index) in jobType" :key="key">
+        <block v-for="(item,index) in jobType" :key="index">
           <swiper-item>
             <div class="list">
               <img  mode="aspectFit" :src="item.img" alt="">

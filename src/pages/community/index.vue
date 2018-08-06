@@ -92,7 +92,7 @@
 
     <div class="t-body">
       <div>
-        <div class="ct-list" v-for="(item,index) in playerXd" :key="key" >
+        <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" src="/static/imgs/qiyu_logo.jpg" alt="">

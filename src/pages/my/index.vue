@@ -56,10 +56,10 @@
             <img class="icon"  src="/static/imgs/icon/icon_sw.png" alt="">
             <div>我的食谱</div>
           </div>
-          <!--<div class="list-shequ">-->
-            <!--<img class="icon" src="/static/imgs/icon/icon_rw.png" alt="">-->
-            <!--<div>我的任务</div>-->
-          <!--</div>-->
+          <div class="list-shequ">
+            <img class="icon" src="/static/imgs/icon/icon_st.png" alt="">
+            <div>我的学会</div>
+          </div>
           <div class="list-shequ">
             <img class="icon"  src="/static/imgs/icon/icon_msg.png" alt="">
             <div>我的消息</div>
