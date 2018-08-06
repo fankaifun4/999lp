@@ -18,8 +18,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background:rgba(240,240,240,.5);
-		border:1rpx solid rgba(200,200,200,.8);
+		background:rgba(240,240,240,1);
 		.nav-item{
 			font-size:28rpx;
 			padding:25rpx 0;

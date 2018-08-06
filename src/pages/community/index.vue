@@ -121,7 +121,6 @@
 </template>
 <script>
   import store from '../../store/store'
-  import http from '../../service/http'
 
   export  default {
     data(){

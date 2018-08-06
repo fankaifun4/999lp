@@ -53,7 +53,7 @@
         padding:20rpx 0;
         margin-bottom: 20rpx;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: flex-start;
         .show-pic{
           width:220rpx;
@@ -176,11 +176,11 @@
             <div v-else class="list-body">
               <div class="list" v-for="(item,index) in goodList" :key="index" @click="golistPath(item)">
                 <div class="show-pic">
-                  <img :src="item.src" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
+                  <img :src="item.img" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
                 </div>
                 <div class="show-cont">
                   <div> {{item.title}} </div>
-                  <div> {{item.text}} </div>
+                  <div> {{item.synopsis}} </div>
                 </div>
               </div>
             </div>
@@ -195,6 +195,8 @@
 import indexDom from '@/components/main/index'
 import banner from '@/components/banner'
 import noData from '@/components/noData'
+
+import { goodList } from '../../server/home'
 export default {
   components:{
     indexDom,
@@ -256,39 +258,29 @@ export default {
           src: 'https://nie.res.netease.com/r/pic/20180620/7b47a939-3147-4b8f-9901-30f5c8a160d4.jpg'
         }
       ],
-      goodList:[
-        {
-          src:"http://www.xinshoucun.com/c/d/file/2018-06-18_f/f6aecc4350e1bfb2b19af47d8235a20a.jpg",
-          text:"水天相接，晨雾蒙蒙笼云涛。银河欲转，千帆如梭逐浪飘。梦魂仿佛回天庭，天帝传话善相邀。殷勤问：归宿何处请相告。",
-          _type:"2",
-          _id:"1",
-          title:'阿萨德'
-        },{
-          src:"http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg",
-          text:"清明时节，春光满地，熏风洋洋。 玉炉中的残烟依旧飘送出醉人的清香。 午睡醒来，头戴的花钿落在枕边床上。",
-          _type:"2",
-          _id:"2",
-          title:'我去额'
-        },{
-          src:"http://www.5mouse.com/uploads/fetcher/20160902105211.jpg",
-          text:"纷纷坠叶飘香砌。夜寂静，寒声碎。真珠帘卷玉楼空，天淡银河垂地。年年今夜，月华如练，长是人千里。",
-          _type:"2",
-          _id:"3",
-          title:'续暗示'
-        }
-      ]
+      goodList:[]
     }
   },
   mounted(){
     this.getData()
   },
-  methods: {
-    getData(){
-      if(this.goodList.length){
-        this.nodata=false
-      }else{
-        this.nodata=true
+  onPullDownRefresh(){
+    this.getData(res=>{
+      if(res){
+        wx.stopPullDownRefresh()
       }
+    })
+  },
+  methods: {
+    getData(cb){
+      goodList(res=>{
+        if(res.statusCode == 200 ){
+          if( res.data.info&& res.data.info.length  ){
+            this.goodList = res.data.info
+          }
+        }
+        cb && cb(res)
+      })
     },
     bindViewTap () {
       const url = '../logs/main'
@@ -328,7 +320,8 @@ export default {
       wx.navigateTo({
         url:'/pages/articleList/main?_id='+model._id+'&_type='+model._type
       })
-    }
+    },
+
   },
   created () {
     this.isLogin()

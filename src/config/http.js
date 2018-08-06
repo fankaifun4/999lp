@@ -4,17 +4,17 @@ function setUrl(url){
   return baseUrl+url
 }
 
-function get(url,data,callBack){
+function get(url='',data={},callBack,options){
   url=setUrl(url)
-  request(url,data,'GET',callBack)
+  request(url,data,'GET',callBack,options)
 }
 
-function post(url,data,callBack){
+function post(url,data,callBack,options){
   url=setUrl(url)
-  request(url,data,'POST')
+  request(url,data,'POST',callBack,options)
 }
 
-function request(url,data,type,header,callBack){
+function request(url,data,type,callBack,options){
   type=type||'POST'
    wx.request({
       url,
