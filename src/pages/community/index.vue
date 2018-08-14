@@ -86,31 +86,30 @@
         <div class="logo-wrap">
           <img class="loginLogo" :src="loginLogo" alt="">
         </div>
-        <button class="login-btn" @getuserinfo="getUserInfo"   open-type="getUserInfo" >欢迎来到奇遇的世界</button>
+        <button class="login-btn" @getuserinfo="loginData"   open-type="getUserInfo" >欢迎来到奇遇的世界</button>
       </div>
     </div>
-
     <div class="t-body">
       <div>
         <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" src="/static/imgs/qiyu_logo.jpg" alt="">
-              {{item.name}}
+              {{item.username}}
             </div>
-            <div class="action">
-              <div class="follow">关注</div>
+            <div class="action" refs="tt">
+              <div class="follow" @click="follow(item)">关注</div>
             </div>
           </div>
-          <div class="list-body" >
+          <div class="list-body">
             <div class="task-titles ts-d pd-tb15" @click="goDetailPath(item)">{{item.title}}</div>
             <div class="task-show-img" >
-              <div class="lg-left" :class="{flex1:item.img.length<2}" @click="lookoutImg(item.img[0],item.img)">
-                <img mode="aspectFill" :src="item.img[0]" alt="">
+              <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
+                <img mode="aspectFill" :src="item.imgs[0]" alt="">
               </div>
-              <div class="lg-right" v-if="item.img.length>1">
-                <div class="img-r" :class="{'height-cover':item.img.length==2}" v-if="item.img.length>1"   @click="lookoutImg(item.img[1],item.img)" ><img  mode="aspectFill" :src="item.img[1]" alt=""></div>
-                <div class="img-r" v-if="item.img.length>2"  @click="lookoutImg(item.img[2],item.img)"><img  mode="aspectFill" :src="item.img[2]" alt=""  ></div>
+              <div class="lg-right" v-if="item.imgs.length>1">
+                <div class="img-r" :class="{'height-cover':item.imgs.length==2}" v-if="item.imgs.length>1"   @click="lookoutImg(item.imgs[1],item.imgs)" ><img  mode="aspectFill" :src="item.imgs[1]" alt=""></div>
+                <div class="img-r" v-if="item.imgs.length>2"  @click="lookoutImg(item.imgs[2],item.imgs)"><img  mode="aspectFill" :src="item.imgs[2]" alt=""  ></div>
               </div>
             </div>
           </div>
@@ -121,11 +120,12 @@
 </template>
 <script>
   import store from '../../store/store'
-
+  import {getInfomation} from '../../server/home'
+  import {loginWx} from '../../server/login'
   export  default {
     data(){
       return{
-        loginLogo:"static/imgs/qiyu_logo.jpg",
+        loginLogo:"/static/imgs/qiyu_logo.jpg",
         userInfo:null,
         unLogin:false,
         isUnRegest:false,
@@ -137,76 +137,25 @@
             cont:""
           }
         ],
-        playerXd:[
-          {
-            name:"饭饭",
-            title:"逆水寒载酒行者奇遇任务攻略",
-            _id:"11",
-            _type:1,
-            img:[
-              "http://img.52z.com/upload/news/image/20180612/20180612035819_37029.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png"
-            ]
-          },
-          {
-            name:"饭饭",
-            title:"逆水寒八奇珍宝奇遇任务攻略",
-            _id:"12",
-            _type:1,
-            img:[
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
-            ]
-          },
-          {
-            name:"饭饭",
-            title:"逆水寒八奇珍宝奇遇任务攻略",
-            _id:"12",
-            _type:1,
-            img:[
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
-            ]
-          },
-          {
-            name:"饭饭",
-            title:"逆水寒八奇珍宝奇遇任务攻略",
-            _id:"12",
-            _type:1,
-            img:[
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
-            ]
-          }
-        ]
+        playerXd:[]
       }
     },
     mounted(){
       // this.getSetting()
+      this.getData()
     },
     methods:{
-      login(){
-        this.unLogin=false
-      },
-      getUserInfo(){
-        wx.getUserInfo({
-          success:(res)=>{
-            this.userInfo=res.userInfo
-            wx.setStorageSync('userInfo',res.userInfo)
-            store.dispatch('setUserInfo',this.userInfo)
-            this.login()
-          },
-          fail(res){
-            console.log(res)
-            this.unLogin=true
-            this.isUnRegest=true
+      loginData(){
+        let _this=this
+        loginWx.getData(function(er,res){
+          if( er ){
+            this.unLogin=false
+            wx.showModal({
+              content:"登录失败"
+            })
+          }else{
+            wx.setStorageSync('token','aslkdjaskldjasklsdjaskljds')
+            this.unLogin=false
           }
         })
       },
@@ -215,7 +164,7 @@
           success:(res)=>{
             if(res.authSetting && res.authSetting['scope.userInfo'] ){
               this.unLogin=false
-              this.getUserInfo()
+              this.loginData()
             }else{
               this.unLogin=true
             }
@@ -232,6 +181,23 @@
         wx.navigateTo({
           url:"/pages/communityDetail/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
         })
+      },
+      getData(){
+        wx.showLoading()
+        getInfomation((err,res)=>{
+          wx.hideLoading()
+          let data = res.data
+          if(data.info && data.info.length){
+            this.playerXd =data.info
+          }
+        })
+      },
+      follow(model){
+        if(wx.getStorageSync('token')){
+            console.log('关注')
+        }else{
+          this.getSetting()
+        }
       }
     }
   }

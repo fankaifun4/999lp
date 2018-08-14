@@ -1,37 +1,53 @@
 import { baseUrl,auth } from "./baseConfig";
+class $http {
+  constructor (url='',data={}){
+    this.data=data
+    this.url = url.indexOf('http')>-1?url:baseUrl+url
+    this.data = data
+    this.$options={}
+  }
+  options(options){
+    this.$options = {...options}
+    return this
+  }
 
-function setUrl(url){
-  return baseUrl+url
-}
+  $get(callback){
+    this.$request('GET',callback)
+    return this
+  }
 
-function get(url='',data={},callBack,options){
-  url=setUrl(url)
-  request(url,data,'GET',callBack,options)
-}
-
-function post(url,data,callBack,options){
-  url=setUrl(url)
-  request(url,data,'POST',callBack,options)
-}
-
-function request(url,data,type,callBack,options){
-  type=type||'POST'
-   wx.request({
-      url,
-      data,
-      method:type,
-      success:res=>{
-        callBack && callBack(res)
+  $post(callback){
+    this.$request('POST',callback)
+    return this
+  }
+  $request(method,callback){
+    const _this = this
+    const token = wx.getStorageSync('token')
+    wx.request({
+      url:_this.url,
+      header:{
+        token,
+        ..._this.$options
       },
-      fail:res=>{
-        callBack && callBack(res)
+      method,
+      data:{ ..._this.data },
+      success(res){
+        console.log(1)
+        callback(null,res)
+      },
+      fail(err){
+        console.log(2)
+        callback(err)
       }
     })
+  }
 }
 
-
+function req(url,data){
+  return new $http(url,data)
+}
 
 export default {
-  get,
-  post
+  $http,
+  req
 }
