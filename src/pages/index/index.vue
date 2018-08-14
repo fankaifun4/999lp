@@ -273,11 +273,10 @@ export default {
   },
   methods: {
     getData(cb){
-      goodList(res=>{
-        if(res.statusCode == 200 ){
-          if( res.data.info&& res.data.info.length  ){
-            this.goodList = res.data.info
-          }
+      goodList((er,res)=>{
+        if( res.data.info&& res.data.info.length  ){
+          console.log(res.data.info)
+          this.goodList = res.data.info
         }
         cb && cb(res)
       })

@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -90,6 +90,11 @@
 					"name": "社区帖子详情",
 					"pathName": "pages/communityDetail/main",
 					"query": "taskName=饭饭& _id= 11& type= 1"
+				},
+				{
+					"id": -1,
+					"name": "资讯",
+					"pathName": "pages/community/main"
 				}
 			]
 		}

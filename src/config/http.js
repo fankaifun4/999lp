@@ -32,11 +32,9 @@ class $http {
       method,
       data:{ ..._this.data },
       success(res){
-        console.log(1)
         callback(null,res)
       },
       fail(err){
-        console.log(2)
         callback(err)
       }
     })

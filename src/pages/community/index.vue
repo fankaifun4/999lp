@@ -95,7 +95,7 @@
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" src="/static/imgs/qiyu_logo.jpg" alt="">
-              {{item.username}}
+              {{item.userName}}
             </div>
             <div class="action" refs="tt">
               <div class="follow" @click="follow(item)">关注</div>
@@ -103,7 +103,7 @@
           </div>
           <div class="list-body">
             <div class="task-titles ts-d pd-tb15" @click="goDetailPath(item)">{{item.title}}</div>
-            <div class="task-show-img" >
+            <div class="task-show-img" v-if="item.imgs.length" >
               <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
                 <img mode="aspectFill" :src="item.imgs[0]" alt="">
               </div>
@@ -120,7 +120,7 @@
 </template>
 <script>
   import store from '../../store/store'
-  import {getInfomation} from '../../server/home'
+  import {getCommunity} from '../../server/home'
   import {loginWx} from '../../server/login'
   export  default {
     data(){
@@ -184,7 +184,7 @@
       },
       getData(){
         wx.showLoading()
-        getInfomation((err,res)=>{
+        getCommunity({pages:1},(err,res)=>{
           wx.hideLoading()
           let data = res.data
           if(data.info && data.info.length){

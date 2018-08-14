@@ -144,6 +144,7 @@
     </div>
     <div class="task-content">
       <div class="tast-body">
+      	 
           <rich-text :nodes="article"></rich-text>
       </div>
     </div>
