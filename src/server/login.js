@@ -4,7 +4,6 @@ class login extends  http.$http {
   constructor (){
     super()
     this.userData = {}
-    this.code = ""
   }
   getUserInfo(callback){
     wx.getUserInfo({
@@ -18,15 +17,13 @@ class login extends  http.$http {
   getCode(callback){
     wx.login({
       success:res=>{
-        this.code =res.code
+        console.log(res.code)
         const login={
           'wx-encry':this.userData.encryptedData,
           'wx-iv':this.userData.iv,
-          'wx-signature':this.userData.signature,
-          'wx-code':this.code
+          'wx-code':res.code
         }
         const loginSync = http.req('/api/login').options({ ...login }).$post((err,res)=>{
-          console.log(err)
           callback(err,res)
         })
       }
