@@ -3,6 +3,7 @@
 
   ._bc{
     background:$white_s;
+    min-height: 100%;
     overflow: hidden;
   }
   .login{
@@ -95,7 +96,7 @@
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" src="/static/imgs/qiyu_logo.jpg" alt="">
-              {{item.userName}}
+              {{item.nickname}}
             </div>
             <div class="action" refs="tt">
               <div class="follow" @click="follow(item)">关注</div>
@@ -148,15 +149,15 @@
       loginData(){
         let _this=this
         loginWx.getData(function(er,res){
-          if( er ){
-            this.unLogin=false
-            wx.showModal({
-              content:"登录失败"
-            })
-          }else{
-            wx.setStorageSync('token','aslkdjaskldjasklsdjaskljds')
-            this.unLogin=false
-          }
+          // if( er ){
+          //   _this.unLogin=false
+          //   wx.showModal({
+          //     content:"登录失败"
+          //   })
+          // }else{
+          //   wx.setStorageSync('token','aslkdjaskldjasklsdjaskljds')
+          //   _this.unLogin=false
+          // }
         })
       },
       getSetting(){
@@ -184,7 +185,7 @@
       },
       getData(){
         wx.showLoading()
-        getCommunity({pages:1},(err,res)=>{
+        getCommunity({page:1},(err,res)=>{
           wx.hideLoading()
           let data = res.data
           if(data.info && data.info.length){

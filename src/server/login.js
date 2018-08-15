@@ -25,8 +25,9 @@ class login extends  http.$http {
           'wx-signature':this.userData.signature,
           'wx-code':this.code
         }
-        const loginSync = http.req('/api/login').options({ ...login }).$post( function(er,res){
-          callback(er,res)
+        const loginSync = http.req('/api/login').options({ ...login }).$post((err,res)=>{
+          console.log(err)
+          callback(err,res)
         })
       }
     })
