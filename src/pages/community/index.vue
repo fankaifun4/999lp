@@ -149,15 +149,15 @@
       loginData(){
         let _this=this
         loginWx.getData(function(er,res){
-          // if( er ){
-          //   _this.unLogin=false
-          //   wx.showModal({
-          //     content:"登录失败"
-          //   })
-          // }else{
-          //   wx.setStorageSync('token','aslkdjaskldjasklsdjaskljds')
-          //   _this.unLogin=false
-          // }
+          if( er ){
+            _this.unLogin=false
+            wx.showModal({
+              content:"登录失败"
+            })
+          }else{
+            wx.setStorageSync('token',res.data.info.token)
+            _this.unLogin=false
+          }
         })
       },
       getSetting(){
@@ -180,7 +180,7 @@
       },
       goDetailPath(item){
         wx.navigateTo({
-          url:"/pages/communityDetail/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
+          url:"/pages/communityDetail/main?_id="+item.id+'&type='+item._type
         })
       },
       getData(){

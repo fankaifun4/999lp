@@ -5,6 +5,7 @@ class $http {
     this.url = url.indexOf('http')>-1?url:baseUrl+url
     this.data = data
     this.$options={}
+    console.log(data)
   }
   options(options){
     this.$options = {...options}
