@@ -68,6 +68,9 @@
     }
     .action{
       font-weight: 300;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       .follow{
         border:1rpx solid $orange_m;
         color:$orange_m;
@@ -75,6 +78,18 @@
         line-height: 50rpx;
         padding:0 25rpx;
         border-radius: 25rpx;
+      }
+      .zan{
+        height:80rpx;
+        overflow: hidden;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img{
+          width:60rpx;
+          height:60rpx;
+          margin-right:10px;
+        }
       }
     }
   }
@@ -99,7 +114,10 @@
               {{item.nickname}}
             </div>
             <div class="action" refs="tt">
-              <div class="follow" @click="follow(item)">关注</div>
+              <div class="zan" @click="addZan(item)">
+                <img src="/static/imgs/icon/nom.png" alt="">
+                {{item.zan}}
+              </div>
             </div>
           </div>
           <div class="list-body">
@@ -122,6 +140,7 @@
 <script>
   import store from '../../store/store'
   import {getCommunity} from '../../server/home'
+  import {addZan} from '../../server/community'
   import {loginWx} from '../../server/login'
   export  default {
     data(){
@@ -193,9 +212,13 @@
           }
         })
       },
-      follow(model){
+      addZan(model){
         if(wx.getStorageSync('token')){
-            console.log('关注')
+          addZan({id:model.id,master:model.username},(er,res)=>{
+            if(res.data.code ===1){
+              model.zan+=1
+            }
+          })
         }else{
           this.getSetting()
         }

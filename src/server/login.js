@@ -17,7 +17,6 @@ class login extends  http.$http {
   getCode(callback){
     wx.login({
       success:res=>{
-        console.log(res.code)
         const login={
           'wx-encry':this.userData.encryptedData,
           'wx-iv':this.userData.iv,
