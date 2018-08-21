@@ -86,8 +86,8 @@
         justify-content: flex-start;
         align-items: center;
         img{
-          width:60rpx;
-          height:60rpx;
+          width:40rpx;
+          height:40rpx;
           margin-right:10px;
         }
       }
@@ -110,12 +110,13 @@
         <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
-              <img class="avart mr-20" src="/static/imgs/qiyu_logo.jpg" alt="">
+              <img class="avart mr-20" :src="item.avatar" alt="">
               {{item.nickname}}
             </div>
             <div class="action" refs="tt">
-              <div class="zan" @click="addZan(item)">
-                <img src="/static/imgs/icon/nom.png" alt="">
+              <div class="zan">
+                <img v-if="item.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
+                <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(item)" >
                 {{item.zan}}
               </div>
             </div>
@@ -142,13 +143,19 @@
   import {getCommunity} from '../../server/home'
   import {addZan} from '../../server/community'
   import {loginWx} from '../../server/login'
+  import loading from '@/components/loading'
   export  default {
+    components:{
+      loading
+    },
     data(){
       return{
         loginLogo:"/static/imgs/qiyu_logo.jpg",
         userInfo:null,
         unLogin:false,
         isUnRegest:false,
+        loading:true,
+        page:1,
         list:[
           {
             avatar:"http://img3.imgtn.bdimg.com/it/u=3771389676,3573396865&fm=27&gp=0.jpg",
@@ -204,25 +211,34 @@
       },
       getData(){
         wx.showLoading()
-        getCommunity({page:1},(err,res)=>{
+        getCommunity({page:this.page},(err,res)=>{
           wx.hideLoading()
-          let data = res.data
-          if(data.info && data.info.length){
-            this.playerXd =data.info
-          }
+          setTimeout(()=>{
+            wx.stopPullDownRefresh()
+            let data = res.data
+            if(data.info && data.info.length){
+              this.playerXd =this.playerXd.concat(data.info).reverse()
+              this.page+=1
+            }
+          },400)
         })
       },
       addZan(model){
         if(wx.getStorageSync('token')){
+          if( model.isSupport ) return
           addZan({id:model.id,master:model.username},(er,res)=>{
             if(res.data.code ===1){
               model.zan+=1
+              model.isSupport = true
             }
           })
         }else{
           this.getSetting()
         }
       }
+    },
+    onPullDownRefresh(){
+      this.getData()
     }
   }
 </script>
