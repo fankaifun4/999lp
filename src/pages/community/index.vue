@@ -111,7 +111,8 @@
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" :src="item.avatar" alt="">
-              {{item.nickname}}
+             {{item.nickname}}
+              <div> {{item.createtime}} </div>
             </div>
             <div class="action" refs="tt">
               <div class="zan">
@@ -226,7 +227,7 @@
       addZan(model){
         if(wx.getStorageSync('token')){
           if( model.isSupport ) return
-          addZan({id:model.id,master:model.username},(er,res)=>{
+          addZan({id:model.id,master:model.uid},(er,res)=>{
             if(res.data.code ===1){
               model.zan+=1
               model.isSupport = true

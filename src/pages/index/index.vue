@@ -52,12 +52,8 @@
         border-bottom:2rpx solid #f5f5f5;
         padding:20rpx 0;
         margin-bottom: 20rpx;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
         .show-pic{
-          width:220rpx;
-          height:150rpx;
+          height:300rpx;
           border:1px solid #ccc;
           border-radius: 15rpx;
           overflow: hidden;
@@ -69,7 +65,8 @@
         }
         .show-cont{
           margin-left:20rpx;
-          font-size:28rpx;
+          font-size:32rpx;
+          margin-bottom:20px;
         }
       }
       .show-top{
@@ -152,7 +149,7 @@
               <img class="icon" src="/static/imgs/remen.png" alt="">热门推荐
             </div>
             <div class ="list-body">
-              <div class="show-top">
+              <div class="show-top" @click="getImgUpload">
                 <img mode="aspectFill" src="http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg" alt="">
               </div>
               <div class="show-bottom">
@@ -175,12 +172,12 @@
             <no-data v-if="nodata"></no-data>
             <div v-else class="list-body">
               <div class="list" v-for="(item,index) in goodList" :key="index" @click="golistPath(item)">
-                <div class="show-pic">
-                  <img :src="item.img" mode="aspectFill" alt="" @click.stop="lookoutImg(item.src)">
-                </div>
                 <div class="show-cont">
                   <div> {{item.title}} </div>
-                  <div> {{item.synopsis}} </div>
+                  <!--<div> {{item.synopsis}} </div>-->
+                </div>
+                <div class="show-pic">
+                  <img :src="item.cover" mode="aspectFit" alt="" @click.stop="lookoutImg(item.cover)">
                 </div>
               </div>
             </div>
@@ -197,6 +194,7 @@ import banner from '@/components/banner'
 import noData from '@/components/noData'
 
 import { goodList } from '../../server/home'
+import {formatTime} from "../../utils";
 export default {
   components:{
     indexDom,
@@ -275,7 +273,6 @@ export default {
     getData(cb){
       goodList((er,res)=>{
         if( res.data.info&& res.data.info.length  ){
-          console.log(res.data.info)
           this.goodList = res.data.info
         }
         cb && cb(res)
@@ -305,7 +302,7 @@ export default {
         url
       })
     },
-    
+
     changeBanner(index){
 
     },
@@ -317,10 +314,27 @@ export default {
     },
     golistPath(model){
       wx.navigateTo({
-        url:'/pages/articleList/main?_id='+model._id+'&_type='+model._type
+        url:'/pages/article/main?_id='+model.id+'&_type='+model._type
       })
     },
-
+    getImgUpload(){
+      wx.chooseImage({
+        count:1,
+        success:res=>{
+          let file = res.tempFilePaths[0]
+          let key = file.substr(file.lastIndexOf('/') + 1);
+          console.log(res)
+          wx.uploadFile({
+            url:"https://sm.ms/api/upload",
+            filePath: file,
+            name:key,
+            success:smRes=>{
+              console.log( smRes )
+            }
+          })
+        }
+      })
+    }
   },
   created () {
     this.isLogin()
