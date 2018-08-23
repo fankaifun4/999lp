@@ -106,18 +106,12 @@
                 <div class="text">{{item.name}}</div>
               </div>
             </div>
-            <div class="nav-list">
-              <div class="nav-item" v-for="(item,index) in playList" :key="index" @click="goPathType(item)">
-                <div class="img"><img mode="widthFix" :src="item.img" alt=""></div>
-                <div class="text">{{item.name}}</div>
-              </div>
-            </div>
           </div>
           <div class="hr"></div>
       </div>
       <div class="ct-list">
         <div class="ct-list-header">
-          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 玩法更新
+          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 最新攻略
         </div>
         <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
           <div class="list-body-title">
@@ -157,25 +151,11 @@
             _type:1
           },
           {
-            name:"探索",
-            img:"https://nie.res.netease.com/r/pic/20180620/6ca8c2ab-242d-4d55-9dd6-1fbb1852c2ad.jpg",
-            path:'strategy/main',
-            _type:2
-          }
-        ],
-        playList:[
-          {
             name:"副本攻略",
             img:"https://nie.res.netease.com/r/pic/20180620/02a4a8c4-38b3-43d4-b995-c316ec4534e6.jpg",
             path:'strategy/main',
             _type:3
           },
-          {
-            name:"合成",
-            img:"http://img3.imgtn.bdimg.com/it/u=2839431261,3664919764&fm=200&gp=0.jpg",
-            path:'strategy/main',
-            _type:4
-          }
         ],
         playerXd:[
           {
@@ -184,12 +164,8 @@
             _id:"11",
             _type:1,
             img:[
-              "http://img.52z.com/upload/news/image/20180612/20180612035819_37029.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png"
+              "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2080635448,571458245&fm=27&gp=0.jpg",
+              "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=659546193,3832164782&fm=27&gp=0.jpg",
             ]
           },
           {
@@ -198,9 +174,7 @@
             _id:"12",
             _type:1,
             img:[
-              "http://img.52z.com/upload/news/image/20180712/20180712020143_91253.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035832_83774.png",
-              "http://img.52z.com/upload/news/image/20180612/20180612035841_72919.png"
+              "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1189882505,2206048616&fm=27&gp=0.jpg",
             ]
           }
         ]

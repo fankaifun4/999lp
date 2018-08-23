@@ -4,6 +4,7 @@
     background: #f5f5f5;
     display: flex;
     flex-direction: column;
+    flex: 1px;
   }
   .task-top{
     background:#fff;
@@ -62,7 +63,18 @@
           line-height: 50rpx;
           padding:0 25rpx;
         }
-
+        .zan{
+          height:80rpx;
+          overflow: hidden;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          img{
+            width:40rpx;
+            height:40rpx;
+            margin-right:10px;
+          }
+        }
       }
     }
   }
@@ -131,15 +143,19 @@
   <div class="bc-sp" >
     <div class="task-top">
       <div class="user">
-        <img class="avatar" src="/static/imgs/qiyu_logo.jpg" alt="">
-        <div class="nickname">{{ taskName }}</div>
+        <img class="avatar" :src="masterInfo.avatar" alt="">
+        <div class="nickname">{{ masterInfo.title }}</div>
       </div>
       <div class="r-act">
         <div class="share">
           <img src="/static/imgs/share.png" alt="">
         </div>
         <div class="action">
-          <div class="follow">已关注</div>
+          <div class="zan">
+            <img v-if="masterInfo.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
+            <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(masterInfo)" >
+            {{masterInfo.zan}}
+          </div>
         </div>
       </div>
     </div>
@@ -161,6 +177,7 @@
 </template>
 <script>
   import {getDetail} from  '../../server/community'
+  import {addZan} from '../../server/community'
   export default {
     data(){
       return {
@@ -168,9 +185,9 @@
         taskName:"",
         _type:'1',
         _id:1,
-        isloading: true,
         comment:"",
-        userInfo:null
+        userInfo:null,
+        masterInfo:{}
       }
     },
     mounted(options){
@@ -190,9 +207,9 @@
           _type:this._type
         },(er,res)=>{
             if(er){
-
             }else{
-              this.setRichText(res.data.info.content)
+              this.masterInfo = res.data.info
+              this.setRichText(this.masterInfo.content)
             }
         })
       },
@@ -202,6 +219,19 @@
         template = template.replace(regex, `<img style="max-width: 100%;"`);
         this.article=template
         wx.hideLoading()
+      },
+      addZan(model){
+        if(wx.getStorageSync('token')){
+          if( model.isSupport ) return
+          addZan({id:model.id,master:model.uid},(er,res)=>{
+            if(res.data.code ===1){
+              model.zan+=1
+              model.isSupport = true
+            }
+          })
+        }else{
+          this.getSetting()
+        }
       }
     }
   }

@@ -2,6 +2,11 @@
   .nav-wrap{
     position: relative;
     padding-top:20rpx;
+    .swiper-item{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .nav-list {
       font-size:26rpx;
       height:160rpx;
@@ -70,7 +75,7 @@
 	<div class="nav-wrap" >
 	    <swiper class="nav-list" :display-multiple-items='items||5'>
 	      <block v-for="(item,index) in navlist" :key="index">
-	        <swiper-item  @click="goPath(item)">
+	        <swiper-item  @click="goPath(item)" class="swiper-item">
 	           <div class="nav-item" >
 	             <img mode="aspectFit"  :src="item.img" alt="" >
 	             <div>{{item.name}}</div>

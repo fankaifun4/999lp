@@ -139,7 +139,8 @@
           <index-dom
             :navlist="indexNavlist"
             @goPath="goPath"
-            @goNewsPath="goNewsPath">
+            :items="3"
+            >
           </index-dom>
           <div class="hr"></div>
         </div>
@@ -185,16 +186,14 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import indexDom from '@/components/main/index'
 import banner from '@/components/banner'
 import noData from '@/components/noData'
-
 import { goodList } from '../../server/home'
-import {formatTime} from "../../utils";
+
 export default {
   components:{
     indexDom,
@@ -221,16 +220,16 @@ export default {
           img:"/static/imgs/qiyu.png",
           path:'/pages/task/main'
         },
-        {
-          name:"装备展台",
-          img:"/static/imgs/yaji.png",
-          path:'/pages/slitTask/main'
-        },
-        {
-          name:"活动福利",
-          img:"/static/imgs/tansuo.png",
-          path:'/pages/activityList/main'
-        }
+        // {
+        //   name:"装备展台",
+        //   img:"/static/imgs/yaji.png",
+        //   path:'/pages/slitTask/main'
+        // },
+        // {
+        //   name:"活动福利",
+        //   img:"/static/imgs/tansuo.png",
+        //   path:'/pages/activityList/main'
+        // }
       ],
       userInfo:{
         avatarUrl:"",
@@ -303,9 +302,7 @@ export default {
       })
     },
 
-    changeBanner(index){
-
-    },
+    changeBanner(index){ },
     lookoutImg(url){
       wx.previewImage({
         current: url,

@@ -3,8 +3,14 @@
 
   ._bc{
     background:$white_s;
-    min-height: 100%;
+    position:absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   .login{
     position: absolute;
@@ -46,7 +52,7 @@
   }
   .t-body{
     height: 100%;
-    overflow: scroll;
+    overflow: hidden;
   }
   .ct-list{
     margin-bottom:20rpx;
@@ -93,25 +99,34 @@
       }
     }
   }
-
+  .publish{
+    position: fixed;
+    z-index: 99999;
+    width:80px;
+    height: 80px;
+    right: 30px;
+    bottom:80px;
+    background:#fff;
+    border-radius: 50%;
+    border:1px solid #f00;
+    img{
+      width:100%;
+      height: 100%;
+    }
+  }
 </style>
 <template>
   <div class="container _bc">
-    <div class="login" v-if="unLogin">
-      <div class="login_body">
-        <div class="logo-wrap">
-          <img class="loginLogo" :src="loginLogo" alt="">
-        </div>
-        <button class="login-btn" @getuserinfo="loginData"   open-type="getUserInfo" >欢迎来到奇遇的世界</button>
-      </div>
+    <div class="publish" @click="publish">
+      <img src="/static/imgs/add.png" alt="">
     </div>
-    <div class="t-body">
+    <scroll-view  scroll-y  class="scroll-wrap" :scroll-with-animation="true"  lower-threshold="50" @scrolltolower="getData">
       <div>
         <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
               <img class="avart mr-20" :src="item.avatar" alt="">
-             {{item.nickname}}
+              {{item.nickname}}
               <div> {{item.createtime}} </div>
             </div>
             <div class="action" refs="tt">
@@ -136,18 +151,18 @@
           </div>
         </div>
       </div>
-    </div>
+      <Loading-dom :dataList="playerXd" :isShow="loading" ></Loading-dom>
+    </scroll-view>
   </div>
 </template>
 <script>
-  import store from '../../store/store'
   import {getCommunity} from '../../server/home'
   import {addZan} from '../../server/community'
   import {loginWx} from '../../server/login'
-  import loading from '@/components/loading'
+  import LoadingDom from '@/components/loading'
   export  default {
     components:{
-      loading
+      LoadingDom
     },
     data(){
       return{
@@ -155,17 +170,10 @@
         userInfo:null,
         unLogin:false,
         isUnRegest:false,
-        loading:true,
         page:1,
-        list:[
-          {
-            avatar:"http://img3.imgtn.bdimg.com/it/u=3771389676,3573396865&fm=27&gp=0.jpg",
-            nickName:"",
-            urls:[],
-            cont:""
-          }
-        ],
-        playerXd:[]
+        list:[],
+        playerXd:[],
+        loading:false
       }
     },
     mounted(){
@@ -173,6 +181,15 @@
       this.getData()
     },
     methods:{
+      publish(){
+        if(wx.getStorageSync('token')){
+          wx.navigateTo({
+            url:"/pages/publish/main"
+          })
+        }else{
+          this.getSetting()
+        }
+      },
       loginData(){
         let _this=this
         loginWx.getData(function(er,res){
@@ -211,17 +228,17 @@
         })
       },
       getData(){
-        wx.showLoading()
+        if( this.loading ) return
+        this.loading=true
         getCommunity({page:this.page},(err,res)=>{
-          wx.hideLoading()
           setTimeout(()=>{
-            wx.stopPullDownRefresh()
+           this.loading=false
             let data = res.data
             if(data.info && data.info.length){
               this.playerXd =this.playerXd.concat(data.info).reverse()
               this.page+=1
             }
-          },400)
+          },1500)
         })
       },
       addZan(model){
@@ -237,9 +254,6 @@
           this.getSetting()
         }
       }
-    },
-    onPullDownRefresh(){
-      this.getData()
     }
   }
 </script>

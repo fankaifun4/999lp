@@ -20,21 +20,17 @@ export default {
         pages: [
             '^pages/index/main',
             'pages/community/main',
-            'pages/learnGroup/main',
+            'pages/communityDetail/main',
             'pages/my/main',
             'pages/news/main',
             'pages/newsdescribe/main',
             'pages/job_style/main',
-            'pages/task/main',
-            'pages/taskList/main',
-            'pages/taskDetail/main',
-            'pages/communityDetail/main',
-            'pages/slitTask/main',
-            'pages/slist/main',
             'pages/activity/main',
-            'pages/activityList/main',
             'pages/article/main',
-            'pages/articleList/main'
+            'pages/taskDetail/main',
+            'pages/taskList/main',
+            'pages/strategy/main',
+            'pages/publish/main'
         ],
         tabBar: {
             color: "#2c2c2c",
@@ -49,7 +45,7 @@ export default {
                 },
                 {
                     pagePath: "pages/community/main",
-                    text: "资讯",
+                    text: "龙门客栈",
                     iconPath: "/static/imgs/shequ.png",
                     selectedIconPath: "/static/imgs/shequ_act.png"
                 }, {
@@ -65,7 +61,7 @@ export default {
             navigationBarBackgroundColor: '#c2c2c2',
             navigationBarTitleText: 'WeChat',
             navigationBarTextStyle: 'black',
-            enablePullDownRefresh: true
+            enablePullDownRefresh: false
         }
     }
 }

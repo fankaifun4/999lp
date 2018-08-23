@@ -147,7 +147,7 @@
           <rich-text :nodes="article"></rich-text>
       </div>
     </div>
-    <div class="fixed-btn">
+    <div class="fixed-btn" v-if="false">
       <div class="">
         <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
       </div>
