@@ -147,18 +147,18 @@
         <div class="content" style="margin-top:-70rpx;">
           <div class="content-list">
             <div class="list-header">
-              <img class="icon" src="/static/imgs/remen.png" alt="">热门推荐
+              <img class="icon" src="/static/imgs/remen.png" alt="">美图推荐
             </div>
             <div class ="list-body">
-              <div class="show-top" @click="getImgUpload">
-                <img mode="aspectFill" src="http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg" alt="">
+              <div class="show-top" @click="getImgUpload" @click="prevImage(meitu[0])">
+                <img mode="aspectFill" :src="meitu[0]" alt="">
               </div>
               <div class="show-bottom">
-                <div class="show-list">
-                  <img mode="aspectFill" src="http://img.newyx.net/article/image/201806/15/d578b68836.png" alt="">
+                <div class="show-list" @click="prevImage(meitu[1])">
+                  <img mode="aspectFill" :src="meitu[1]" alt="">
                 </div>
-                <div class="show-list">
-                  <img mode="aspectFill" src="http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg" alt="">
+                <div class="show-list" @click="prevImage(meitu[2])">
+                  <img mode="aspectFill" :src="meitu[2]" alt="">
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@
         <div class="content">
           <div class="content-list">
             <div class="list-header">
-              <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选文章
+              <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选推荐
             </div>
             <no-data v-if="nodata"></no-data>
             <div v-else class="list-body">
@@ -255,7 +255,12 @@ export default {
           src: 'https://nie.res.netease.com/r/pic/20180620/7b47a939-3147-4b8f-9901-30f5c8a160d4.jpg'
         }
       ],
-      goodList:[]
+      goodList:[],
+      meitu:[
+        "http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg",
+        "http://img.newyx.net/article/image/201806/15/d578b68836.png",
+        "http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg"
+      ]
     }
   },
   mounted(){
@@ -312,24 +317,6 @@ export default {
     golistPath(model){
       wx.navigateTo({
         url:'/pages/article/main?_id='+model.id+'&_type='+model._type
-      })
-    },
-    getImgUpload(){
-      wx.chooseImage({
-        count:1,
-        success:res=>{
-          let file = res.tempFilePaths[0]
-          let key = file.substr(file.lastIndexOf('/') + 1);
-          console.log(res)
-          wx.uploadFile({
-            url:"https://sm.ms/api/upload",
-            filePath: file,
-            name:key,
-            success:smRes=>{
-              console.log( smRes )
-            }
-          })
-        }
       })
     }
   },

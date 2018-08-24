@@ -1,115 +1,189 @@
 <style scoped lang="scss">
-  .task-img{
-    width:200rpx;
-    height:100rpx;
+  .wrap{
     overflow: hidden;
-    border-radius: 5rpx;
-    float: left;
-    margin-right:10rpx;
-    img{
+    flex: 1;
+  }
+  .top-banner{
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+    >img{
       width:100%;
-      height:100%;
+      height: 100%;
+    }
+  }
+  .nav-wrap{
+    padding:15rpx;
+  }
+  .nav-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:20rpx;
+    .nav-item{
+      flex: 1;
+      position: relative;
+      .img{
+        width:100%;
+        height:150rpx;
+        border-radius: 8rpx;
+        overflow: hidden;
+        >img{
+          border-radius: 8rpx;
+          overflow: hidden;
+          width:100%;
+          height: 100%;
+        }
+      }
+      .text{
+        margin-top:15rpx;
+        font-size: 26rpx;
+        text-align: center;
+      }
+
+      &:first-child{
+        margin-right: 10rpx;
+      }
+    }
+  }
+  .task-titles{
+    font-size: 38px;
+    margin-bottom:15rpx;
+  }
+  .task-show-img{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+    .flex1{
+      flex: 1 !important;
+    }
+    .lg-left{
+      flex:.6;
+      height:300rpx;
+      img{
+        width:100%;
+        height:100%;
+      }
+    }
+    .lg-right{
+      flex:.38;
+      height:300rpx;
+      .height-cover{
+        overflow: hidden;
+        height:300rpx !important;
+        >img{
+          width:100%;
+          height:100%;
+        }
+      }
+      .img-r{
+        overflow: hidden;
+        height:145rpx;
+        &:first-child{
+          margin-bottom:10rpx;
+        }
+        >img{
+          width:100%;
+          height:100%;
+        }
+      }
     }
   }
 </style>
 <template>
-  <div class="ct_w">
-    <div class="ct-t">
-      <div class="top-banner">
-        <img class="top-bgs" mode="aspectFill" :src="banner" alt="">
-      </div>
-    </div>
-    <div class="ct-b">
-      <div class="ct-list">
-        <div class="ct-list-header">
-          <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> {{taskName}}
+  <div class="wrap">
+    <scroll-view scroll-y style="height: 100%" @scrolltolower="scrolltolower">
+      <div class="ct-t">
+        <div class="top-banner">
+          <img class="top-bgs" mode="aspectFill" :src="banner" alt="">
         </div>
-        <div class="list-body" v-for="(item,index) in taskXList" :key="index" >
-          <div class="list-body-title fs-b ts-d" @click="toDetail(item)">
-            {{item.name}}
+      </div>
+      <div class="ct-b">
+        <div class="ct-list">
+          <div class="ct-list-header">
+            <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 副本攻略
           </div>
-          <div class="list-body-items">
-            <div class="task-img" @click="lookImg(item.img)">
-              <img mode="aspectFill"  :src="item.img" alt="" v-if="item.img">
+          <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
+            <div class="list-body-title">
+              作者：{{item.nickname}}
             </div>
-            {{item.cont}}
+            <div class="list-body-items">
+              <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+              <div class="task-show-img" >
+                <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <img mode="aspectFill" :src="item.imgs[0]" alt="">
+                </div>
+                <div class="lg-right" v-if="item.imgs.length>1">
+                  <div class="img-r" :class="{'height-cover':item.imgs.length==2}" v-if="item.imgs.length>1"   @click="lookoutImg(item.imgs[1],item.imgs)" ><img  mode="aspectFill" :src="item.imgs[1]" alt=""></div>
+                  <div class="img-r" v-if="item.imgs.length>2"  @click="lookoutImg(item.imgs[2],item.imgs)"><img  mode="aspectFill" :src="item.imgs[2]" alt=""  ></div>
+                </div>
+              </div>
+            </div>
           </div>
+          <load-dom :isShow="loader"></load-dom>
         </div>
       </div>
-      <!--小吉end-->
-    </div>
+
+    </scroll-view>
   </div>
 </template>
+
 <script>
+  import indexDom from '@/components/main/index'
+  import loadDom  from '@/components/loading'
+  import {getGonglue} from '../../server/gonglue'
   export default {
+    components:{
+      indexDom,
+      loadDom
+    },
     data(){
-      return {
-        taskName:"",
-        _type:2,
-        banner:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532936097845&di=9c0b89fc759b3b59b5082915855bcf58&imgtype=0&src=http%3A%2F%2Fimage12.m1905.cn%2Fmapps%2Fuploadfile%2Fedu%2F2014%2F0805%2F2014080503140411360.jpg",
-        taskXList:[
-          {
-            name:"花下风流饮",
-            cont:"甜水巷门口阿刚（491,649）对话进入剧本甜水巷，于春杏身旁桌上（496,696）右键千日醉，饮十次有几率触发，触发后没有任务，跟随红枫叶NPC听他说完即可。",
-            _id:"1",
-            _type:1,
-            img:"http://thumb10.jfcdns.com/thumb/2018-07/bce5b3b31822d3ac_600_0.jpeg"
-          },{
-            name:"夜风拂红尘",
-            cont:"剧本甜水巷梁妈右手楼上，在唐三仙（462,765）那里打坐。找“温不老”服用青云丹亦可直接飞上房顶。",
-            _id:"2",
-            _type:1,
-            img:"http://thumb11.jfcdns.com/thumb/2018-07/bce5b3b31824f75a_600_0.jpeg"
-          }
-        ],
-        taskZList:[
-          {
-            name:"花下风流饮",
-            cont:"甜水巷门口阿刚（491,649）对话进入剧本甜水巷，于春杏身旁桌上（496,696）右键千日醉，饮十次有几率触发，触发后没有任务，跟随红枫叶NPC听他说完即可。",
-            _id:"1",
-            _type:1,
-            img:"http://thumb11.jfcdns.com/thumb/2018-07/bce5b3b31824f75a_600_0.jpeg"
-          },{
-            name:"夜风拂红尘",
-            cont:"剧本甜水巷梁妈右手楼上，在唐三仙（462,765）那里打坐。找“温不老”服用青云丹亦可直接飞上房顶。",
-            _id:"2",
-            _type:1,
-            img:"http://thumb11.jfcdns.com/thumb/2018-07/bce5b3b31824f75a_600_0.jpeg"
-          }
-        ],
-        taskDList:[
-          {
-            name:"花下风流饮",
-            cont:"甜水巷门口阿刚（491,649）对话进入剧本甜水巷，于春杏身旁桌上（496,696）右键千日醉，饮十次有几率触发，触发后没有任务，跟随红枫叶NPC听他说完即可。",
-            _id:"1",
-            _type:1,
-            img:"http://thumb11.jfcdns.com/thumb/2018-07/bce5b3b31824f75a_600_0.jpeg"
-          },{
-            name:"夜风拂红尘",
-            cont:"剧本甜水巷梁妈右手楼上，在唐三仙（462,765）那里打坐。找“温不老”服用青云丹亦可直接飞上房顶。",
-            _id:"2",
-            _type:1,
-            img:"http://thumb11.jfcdns.com/thumb/2018-07/bce5b3b31824f75a_600_0.jpeg"
-          }
-        ]
+      return{
+        banner:"https://nie.res.netease.com/r/pic/20180620/1f73d859-6f6e-4d46-a2c5-e7716f54df31.jpg",
+        playerXd:[],
+        page:1,
+        loader:true
       }
     },
-    onLoad(option){
-      this.taskName=option.taskName
-      this._type=option._type
-      // console.log(option)
+    create(){
+
+    },
+    mounted(){
+      this.getData()
     },
     methods:{
-      toDetail(item){
-        wx.navigateTo({
-          url:'/pages/taskDetail/main?taskName='+item.name+'&_type='+item._type+'&_id='+item._id
+      getData(){
+        getGonglue({page:this.page},(er,res)=>{
+           if(res.data && res.data.info && res.data.info.length){
+             setTimeout(()=>{
+               this.playerXd=res.data.info
+               this.page+=1
+               this.loader=false
+             },500)
+           }else{
+             setTimeout(()=>{
+              this.loader=false
+             },500)
+           }
         })
       },
-      lookImg(url){
+      lookoutImg(cur,imgs){
         wx.previewImage({
-          current: url,
-          urls:[url]
+          current:cur,
+          urls:imgs
         })
+      },
+      goDetailPath(item){
+        wx.navigateTo({
+          url:"/pages/strategyDetail/main?_id="+item.id
+        })
+      },
+      scrolltolower(){
+       if(this.loader) return
+        this.loader=true
+        this.getData()
       }
     }
   }

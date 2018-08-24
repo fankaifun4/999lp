@@ -1,6 +1,5 @@
 <style lang="scss" scoped>
 @import '../../../static/style/config.scss';
-
   ._bc{
     background:$white_s;
     position:absolute;
@@ -34,11 +33,15 @@
       box-sizing: border-box;
       .logo-wrap{
         padding: 30rpx 0rpx;
-        .loginLogo{
+        .login-logo{
           width:280rpx;
           height:203rpx;
           margin:0 auto;
           display: block;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
       }
       .login-btn{
@@ -47,6 +50,8 @@
         width:350rpx;
         line-height: 60rpx;
         font-size: 24rpx;
+        background: #0ab143;
+        color: #fff;
       }
     }
   }
@@ -101,7 +106,7 @@
   }
   .publish{
     position: fixed;
-    z-index: 99999;
+    z-index: 600;
     width:80px;
     height: 80px;
     right: 30px;
@@ -117,6 +122,16 @@
 </style>
 <template>
   <div class="container _bc">
+    <div class="login" v-if="unLogin">
+      <div class="login_body">
+        <div class="logo-wrap">
+          <div class="login-logo">
+            <img  src="/static/imgs/qiyu_logo.jpg" alt="">
+          </div>
+        </div>
+        <button class="login-btn" open-type="getUserInfo" @getuserinfo="loginData"  >登录</button>
+      </div>
+    </div>
     <div class="publish" @click="publish">
       <img src="/static/imgs/add.png" alt="">
     </div>
@@ -151,7 +166,7 @@
           </div>
         </div>
       </div>
-      <Loading-dom :dataList="playerXd" :isShow="loading" ></Loading-dom>
+      <Loading-dom  :isShow="loading" ></Loading-dom>
     </scroll-view>
   </div>
 </template>
@@ -177,7 +192,6 @@
       }
     },
     mounted(){
-      // this.getSetting()
       this.getData()
     },
     methods:{

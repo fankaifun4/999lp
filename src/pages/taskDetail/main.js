@@ -8,6 +8,7 @@ export  default {
   config:{
     usingComponents:{
 
-    }
+    },
+    navigationBarTitleText:"玩法整理"
   }
 }

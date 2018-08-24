@@ -86,9 +86,7 @@
     methods:{
       getData(){
         getQiyulist((er,res)=>{
-          console.log('111111111111111111111')
           this.qiyuList = res.data
-          console.log(this.qiyuList)
         })
       },
       toDetail(item){

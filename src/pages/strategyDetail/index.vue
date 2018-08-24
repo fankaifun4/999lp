@@ -133,7 +133,7 @@
   <div class="container bc-sp" >
     <div class="task-top">
       <div class="user">
-        <img class="avatar" :src="dataInfo.cover" alt="" v-if="false">
+        <img class="avatar" :src="userInfo.avatarUrl" alt="" v-if="true">
         <div class="nickname">{{ dataInfo.title }}</div>
       </div>
       <div class="r-act">
@@ -163,7 +163,7 @@
   </div>
 </template>
 <script>
-  import  {getQiyuDetail} from '../../server/task'
+  import  {getGonglueDetail} from '../../server/gonglue'
   export default {
     data(){
       return {
@@ -182,11 +182,10 @@
 
     },
     onLoad(options){
-      this.taskName=options.taskName
-      this._type=options._type
       this._id=options._id
       this.userInfo=wx.getStorageSync('userInfo')
-      this.getData(this._id,this._type)
+
+      this.getData(this._id)
     },
     computed:{
 
@@ -200,9 +199,8 @@
         this.isloading=false
       },
       getData(id,_type){
-        getQiyuDetail({
-          id,
-          _type
+        getGonglueDetail({
+          id
         },(err,res)=>{
           this.dataInfo= res.data.info
           let template=this.dataInfo.content

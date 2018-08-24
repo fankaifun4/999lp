@@ -9,6 +9,6 @@ export  default {
     usingComponents:{
 
     },
-    navigationBarTitleText:"活动"
+    navigationBarTitleText:"攻略详情"
   }
 }
