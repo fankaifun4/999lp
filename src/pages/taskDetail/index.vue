@@ -131,40 +131,41 @@
 
 <template>
   <div class="container bc-sp" >
-    <div class="task-top">
-      <div class="user">
-        <img class="avatar" :src="dataInfo.cover" alt="" v-if="false">
-        <div class="nickname">{{ dataInfo.title }}</div>
-      </div>
-      <div class="r-act">
-        <div class="share" @click="shareTick">
-          <img src="/static/imgs/share.png" alt="">
+      <div class="task-top">
+        <div class="user">
+          <img class="avatar" :src="dataInfo.cover" alt="" v-if="false">
+          <div class="nickname">{{ dataInfo.title }}</div>
         </div>
-        <div class="action" v-if="false">
-          <div class="follow">已关注</div>
+        <div class="r-act">
+          <div class="share" @click="shareTick" v-if="false">
+            <img src="/static/imgs/share.png" alt="">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="task-content">
-      <div class="tast-body">
+      <div class="task-content">
+        <div class="tast-body">
           <rich-text :nodes="article"></rich-text>
+        </div>
       </div>
-    </div>
-    <div class="fixed-btn" v-if="false">
-      <div class="">
-        <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
+      <div class="fixed-btn" v-if="false">
+        <div class="">
+          <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
+        </div>
+        <div class="long">
+          <input type="text" v-if="!insertData" v-model="comment"  class="comment"  >
+          <button class="sendMsg" v-if="comment.length<1">发送</button>
+          <button class="sendMsg enabled" v-else @click="sendMsg">发送</button>
+        </div>
       </div>
-      <div class="long">
-        <input type="text" v-if="!insertData" v-model="comment"  class="comment"  >
-        <button class="sendMsg" v-if="comment.length<1">发送</button>
-        <button class="sendMsg enabled" v-else @click="sendMsg">发送</button>
-      </div>
-    </div>
   </div>
 </template>
 <script>
   import  {getQiyuDetail} from '../../server/task'
+  import noData from '@/components/noData'
   export default {
+    components:{
+      noData
+    },
     data(){
       return {
         article:[],
@@ -175,7 +176,8 @@
         comment:"",
         userInfo:null,
         insertData:false,
-        dataInfo:{}
+        dataInfo:{},
+        nodata:false,
       }
     },
     created(){
@@ -200,13 +202,20 @@
         this.isloading=false
       },
       getData(id,_type){
+        wx.showLoading()
         getQiyuDetail({
           id,
           _type
         },(err,res)=>{
+          wx.hideLoading()
           this.dataInfo= res.data.info
-          let template=this.dataInfo.content
-          this.getRichData(template)
+          if(res.data.info){
+            this.nodata=false
+            let template=this.dataInfo.content
+            this.getRichData(template)
+          }else{
+            this.nodata=true
+          }
         })
       },
       shareTick(){

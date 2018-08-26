@@ -75,7 +75,7 @@
   export default {
     data(){
       return {
-        banner:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532936097845&di=9c0b89fc759b3b59b5082915855bcf58&imgtype=0&src=http%3A%2F%2Fimage12.m1905.cn%2Fmapps%2Fuploadfile%2Fedu%2F2014%2F0805%2F2014080503140411360.jpg",
+        banner:"https://i.loli.net/2018/08/26/5b8247564b604.jpg",
         qiyuList:[],
         _type:1
       }

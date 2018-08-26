@@ -113,19 +113,22 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 最新攻略
         </div>
-        <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
-          <div class="list-body-title">
-            作者：{{item.name}}
-          </div>
-          <div class="list-body-items">
-            <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
-            <div class="task-show-img" >
-              <div class="lg-left" :class="{flex1:item.img.length<2}" @click="lookoutImg(item.img[0],item.img)">
-                <img mode="aspectFill" :src="item.img[0]" alt="">
-              </div>
-              <div class="lg-right" v-if="item.img.length>1">
-                <div class="img-r" :class="{'height-cover':item.img.length==2}" v-if="item.img.length>1"   @click="lookoutImg(item.img[1],item.img)" ><img  mode="aspectFill" :src="item.img[1]" alt=""></div>
-                <div class="img-r" v-if="item.img.length>2"  @click="lookoutImg(item.img[2],item.img)"><img  mode="aspectFill" :src="item.img[2]" alt=""  ></div>
+        <no-data v-if="nodata"></no-data>
+        <div v-else>
+          <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
+            <div class="list-body-title">
+              作者：{{item.nickname}}
+            </div>
+            <div class="list-body-items">
+              <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+              <div class="task-show-img" >
+                <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <img mode="aspectFill" :src="item.imgs[0]" alt="">
+                </div>
+                <div class="lg-right" v-if="item.imgs.length>1">
+                  <div class="img-r" :class="{'height-cover':item.imgs.length==2}" v-if="item.imgs.length>1"   @click="lookoutImg(item.imgs[1],item.imgs)" ><img  mode="aspectFill" :src="item.imgs[1]" alt=""></div>
+                  <div class="img-r" v-if="item.imgs.length>2"  @click="lookoutImg(item.imgs[2],item.imgs)"><img  mode="aspectFill" :src="item.imgs[2]" alt=""  ></div>
+                </div>
               </div>
             </div>
           </div>
@@ -136,60 +139,52 @@
 </template>
 <script>
   import indexDom from '@/components/main/index'
+  import  {getGonglue} from "../../server/gonglue"
+  import noData from '@/components/noData'
   export default {
     components:{
-      indexDom
+      indexDom,
+      noData
     },
     data(){
       return{
         banner:"https://nie.res.netease.com/r/pic/20180620/1f73d859-6f6e-4d46-a2c5-e7716f54df31.jpg",
+        nodata:false,
         taskList:[
           {
             name:"奇遇",
-            img:"http://img4.imgtn.bdimg.com/it/u=858488715,1255645831&fm=27&gp=0.jpg",
-            path:'taskList/main',
-            _type:1
+            img:"https://i.loli.net/2018/08/26/5b82832e06979.jpg",
+            path:'taskList/main'
           },
           {
             name:"副本攻略",
-            img:"https://nie.res.netease.com/r/pic/20180620/02a4a8c4-38b3-43d4-b995-c316ec4534e6.jpg",
-            path:'strategy/main',
-            _type:3
+            img:"https://i.loli.net/2018/08/26/5b82832de418a.jpg",
+            path:'strategy/main'
           },
         ],
-        playerXd:[
-          {
-            name:"饭饭",
-            title:"逆水寒载酒行者奇遇任务攻略",
-            _id:"11",
-            _type:1,
-            img:[
-              "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2080635448,571458245&fm=27&gp=0.jpg",
-              "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=659546193,3832164782&fm=27&gp=0.jpg",
-            ]
-          },
-          {
-            name:"饭饭",
-            title:"逆水寒八奇珍宝奇遇任务攻略",
-            _id:"12",
-            _type:1,
-            img:[
-              "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1189882505,2206048616&fm=27&gp=0.jpg",
-            ]
-          }
-        ]
+        playerXd:[]
       }
     },
-    create(){
-
+    created(){
+      this.getData()
     },
     mounted(){
 
     },
     methods:{
+      getData(){
+        getGonglue({page:1},(er,res)=>{
+          if(res && res.data && res.data.info){
+            this.playerXd = res.data.info
+            this.nodata = false
+          }else{
+            this.nodata = true
+          }
+        })
+      },
       goPathType(model){
         wx.navigateTo({
-          url:"../"+model.path+'?taskName='+model.name+'&_type='+model._type
+          url:"../"+model.path
         })
       },
       lookoutImg(cur,imgs){
@@ -200,7 +195,7 @@
       },
       goDetailPath(item){
         wx.navigateTo({
-          url:"/pages/taskDetail/main?taskName="+item.name+'&_id='+item._id+'&type='+item._type
+          url:"/pages/strategyDetail/main?_id="+item.id
         })
       }
     }

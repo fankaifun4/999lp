@@ -184,7 +184,6 @@
     onLoad(options){
       this._id=options._id
       this.userInfo=wx.getStorageSync('userInfo')
-
       this.getData(this._id)
     },
     computed:{
@@ -198,10 +197,12 @@
         this.article=template
         this.isloading=false
       },
-      getData(id,_type){
+      getData(id){
+        wx.showLoading()
         getGonglueDetail({
           id
         },(err,res)=>{
+          wx.hideLoading()
           this.dataInfo= res.data.info
           let template=this.dataInfo.content
           this.getRichData(template)

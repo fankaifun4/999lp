@@ -150,14 +150,14 @@
               <img class="icon" src="/static/imgs/remen.png" alt="">美图推荐
             </div>
             <div class ="list-body">
-              <div class="show-top" @click="getImgUpload" @click="prevImage(meitu[0])">
+              <div class="show-top" @click="prevImage(meitu[0])" >
                 <img mode="aspectFill" :src="meitu[0]" alt="">
               </div>
               <div class="show-bottom">
                 <div class="show-list" @click="prevImage(meitu[1])">
                   <img mode="aspectFill" :src="meitu[1]" alt="">
                 </div>
-                <div class="show-list" @click="prevImage(meitu[2])">
+                <div class="show-list" @click="prevImage(meitu[2])" >
                   <img mode="aspectFill" :src="meitu[2]" alt="">
                 </div>
               </div>
@@ -172,13 +172,21 @@
             </div>
             <no-data v-if="nodata"></no-data>
             <div v-else class="list-body">
-              <div class="list" v-for="(item,index) in goodList" :key="index" @click="golistPath(item)">
-                <div class="show-cont">
-                  <div> {{item.title}} </div>
-                  <!--<div> {{item.synopsis}} </div>-->
+              <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
+                <div class="list-body-title">
+                  作者：{{item.nickname}}
                 </div>
-                <div class="show-pic">
-                  <img :src="item.cover" mode="aspectFit" alt="" @click.stop="lookoutImg(item.cover)">
+                <div class="list-body-items">
+                  <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+                  <div class="task-show-img" >
+                    <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
+                      <img mode="aspectFill" :src="item.imgs[0]" alt="">
+                    </div>
+                    <div class="lg-right" v-if="item.imgs.length>1">
+                      <div class="img-r" :class="{'height-cover':item.imgs.length==2}" v-if="item.imgs.length>1"   @click="lookoutImg(item.imgs[1],item.imgs)" ><img  mode="aspectFill" :src="item.imgs[1]" alt=""></div>
+                      <div class="img-r" v-if="item.imgs.length>2"  @click="lookoutImg(item.imgs[2],item.imgs)"><img  mode="aspectFill" :src="item.imgs[2]" alt=""  ></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,10 +197,10 @@
   </div>
 </template>
 <script>
-import indexDom from '@/components/main/index'
-import banner from '@/components/banner'
-import noData from '@/components/noData'
-import { goodList } from '../../server/home'
+import indexDom from '../../components/main/index'
+import banner from '../../components/banner'
+import noData from '../../components/noData'
+import {getGonglue} from '../../server/gonglue'
 
 export default {
   components:{
@@ -256,30 +264,49 @@ export default {
         }
       ],
       goodList:[],
+      playerXd:[],
       meitu:[
-        "http://i.17173cdn.com/2fhnvk/YWxqaGBf/cms3/OXuyLxbmdurwdru.jpg",
-        "http://img.newyx.net/article/image/201806/15/d578b68836.png",
-        "http://img0.pconline.com.cn/pconline/1707/28/9668270_57cbf6dd66_thumb.jpg"
+        "https://i.loli.net/2018/08/26/5b82182460fad.jpg",
+        "https://i.loli.net/2018/08/26/5b8218246c2c4.jpg",
+        "https://i.loli.net/2018/08/26/5b8218249e58e.jpg",
+        "https://i.loli.net/2018/08/26/5b821824b0e74.jpg",
+        "https://i.loli.net/2018/08/26/5b82193882b8b.jpg",
+        "https://i.loli.net/2018/08/26/5b82193885976.jpg",
+        "https://i.loli.net/2018/08/26/5b82193887624.jpg",
+        "https://i.loli.net/2018/08/26/5b82193898ba3.jpg",
+        "https://i.loli.net/2018/08/26/5b8219389f7ed.jpg"
       ]
     }
   },
   mounted(){
     this.getData()
   },
-  onPullDownRefresh(){
-    this.getData(res=>{
-      if(res){
-        wx.stopPullDownRefresh()
-      }
-    })
-  },
   methods: {
+    lookoutImg(cur,imgs){
+      wx.previewImage({
+        current:cur,
+        urls:imgs
+      })
+    },
+    goDetailPath(item){
+      wx.navigateTo({
+        url:"/pages/strategyDetail/main?_id="+item.id
+      })
+    },
     getData(cb){
-      goodList((er,res)=>{
-        if( res.data.info&& res.data.info.length  ){
-          this.goodList = res.data.info
+      getGonglue({page:1},(er,res)=>{
+        if(res && res.data && res.data.info && res.data.info.length){
+            this.playerXd=res.data.info
+            this.loader=false
+        }else{
+            this.loader=false
         }
-        cb && cb(res)
+      })
+    },
+    prevImage(img){
+      wx.previewImage({
+        current:img,
+        urls:this.meitu
       })
     },
     bindViewTap () {
@@ -298,7 +325,7 @@ export default {
 
     },
     clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+      // console.log('clickHandle:', msg, ev)
     },
     goPath(model){
       let url=model.path

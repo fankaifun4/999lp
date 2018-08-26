@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'development') {
     sessionToken: '',
   }
 } else if (process.env.NODE_ENV === 'production') {
-  baseUrl = ''
+  baseUrl = 'https://www.999lp.cn'
 }
 export {
   baseUrl,

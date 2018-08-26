@@ -29,7 +29,7 @@
         height: 18rpx;
         position: absolute;
         left: 10rpx;
-        top: 25px;
+        top: 50px;
       }
       .news-li-content{
         padding-top:15rpx;
@@ -49,8 +49,8 @@
         <no-data v-if="hsNoData"></no-data>
         <div class="new-list-sroll" v-else>
           <div class="news-li" v-for="(item,index) in newsList" :key="index" @click="goNEW(item)">
-            <div class="news-li-content">{{item.content}}</div>
-            <div class="news-li-time">{{item.time}}</div>
+            <div class="news-li-content">{{item.title}}</div>
+            <div class="news-li-time">{{item.createdtime}}</div>
           </div>
         </div>
         
@@ -61,6 +61,7 @@
 <script>
   import fixBg from '@/components/fixbg'
   import noData from '@/components/noData'
+  import { news } from '../../server/news'
   export default{
     components:{
       fixBg,
@@ -69,18 +70,8 @@
     data(){
       return{
         hsNoData:false,
-        newsList:[
-          {
-            time:"18-07-19",
-            content:"《逆水寒》更新公告(版本18-07-18-17-34)",
-            _id:"1"
-          },
-          {
-            time:"18-07-12",
-            content:"《逆水寒》更新公告(版本18-07-11-16-16)",
-            _id:"2"
-          }
-        ]
+        newsList:[],
+        page:1
       }
     },
     mounted(){
@@ -89,15 +80,17 @@
     methods:{
       goNEW(item){
         wx.navigateTo({
-          url:"/pages/newsdescribe/main?_id="+item._id
+          url:"/pages/newsdescribe/main?id="+item.id
         })
       },
       getData(){
-        if(this.newsList.length>0){
-
-        }else{
-          this.hsNoData=true
-        }
+        news({page:this.page},(er,res)=>{
+          if(res.data && res.data.info){
+            this.newsList = res.data.info
+          }else{
+            this.hsNoData=true
+          }
+        })
       }
     }
   }

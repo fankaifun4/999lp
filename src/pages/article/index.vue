@@ -139,12 +139,9 @@
         <img class="avatar" :src="articleInfo.avater" alt="">
         <div class="nickname">{{ articleInfo.nickname }}</div>
       </div>
-      <div class="r-act">
+      <div class="r-act" v-if="false">
         <div class="share">
           <img src="/static/imgs/share.png" alt="">
-        </div>
-        <div class="action" v-if="false">
-          <div class="follow">已关注</div>
         </div>
       </div>
     </div>

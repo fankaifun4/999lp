@@ -132,7 +132,7 @@
         <button class="login-btn" open-type="getUserInfo" @getuserinfo="loginData"  >登录</button>
       </div>
     </div>
-    <div class="publish" @click="publish">
+    <div class="publish" @click="publish" v-if="false">
       <img src="/static/imgs/add.png" alt="">
     </div>
     <scroll-view  scroll-y  class="scroll-wrap" :scroll-with-animation="true"  lower-threshold="50" @scrolltolower="getData">
@@ -147,7 +147,7 @@
             <div class="action" refs="tt">
               <div class="zan">
                 <img v-if="item.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
-                <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(item)" >
+                <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(item)"  >
                 {{item.zan}}
               </div>
             </div>

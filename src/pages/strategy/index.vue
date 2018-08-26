@@ -156,16 +156,16 @@
     methods:{
       getData(){
         getGonglue({page:this.page},(er,res)=>{
-           if(res.data && res.data.info && res.data.info.length){
+           if(res && res.data && res.data.info && res.data.info.length){
              setTimeout(()=>{
                this.playerXd=res.data.info
                this.page+=1
                this.loader=false
-             },500)
+             },1500)
            }else{
              setTimeout(()=>{
               this.loader=false
-             },500)
+             },1500)
            }
         })
       },
