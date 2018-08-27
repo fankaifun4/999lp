@@ -26,6 +26,15 @@
     margin-bottom:20rpx;
     .list-body{
       padding:0 20rpx 20rpx 20rpx;
+      border-bottom:1px solid #f5f5f6;
+      .list-body-title{
+        font-size: 32px;
+        padding:15px 0;
+      }
+      .list-body-items{
+        font-size: 32px;
+        padding:15px 0;
+      }
     }
     .content-list{
       border-radius:10rpx 10rpx 0 0;
@@ -33,7 +42,7 @@
       position:relative;
       background:#fff;
       .list-header{
-        font-size:26rpx;
+        font-size:32rpx;
         color:#000;
         padding:20rpx 15rpx;
         border-bottom:1rpx solid #f5f5f5;
@@ -171,7 +180,7 @@
               <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选推荐
             </div>
             <no-data v-if="nodata"></no-data>
-            <div v-else class="list-body">
+            <div v-else>
               <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
                 <div class="list-body-title">
                   作者：{{item.nickname}}

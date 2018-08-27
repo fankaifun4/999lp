@@ -80,9 +80,11 @@
     .tast-body{
       position: relative;
       box-sizing: border-box;
+      line-height: 60rpx;
+      font-size: 32rpx;
       .rich-cont{
         line-height: 60rpx;
-        font-size: 28rpx;
+        font-size: 32rpx;
       }
     }
   }
