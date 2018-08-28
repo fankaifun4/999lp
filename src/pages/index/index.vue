@@ -21,18 +21,18 @@
     border-bottom:2rpx solid #ccc;
   }
   .content{
-    padding:0 15rpx;
+    padding:0 20rpx;
     position:relative;
     margin-bottom:20rpx;
     .list-body{
       padding:0 20rpx 20rpx 20rpx;
       border-bottom:1px solid #f5f5f6;
       .list-body-title{
-        font-size: 32px;
+        font-size: 30px;
         padding:15px 0;
       }
       .list-body-items{
-        font-size: 32px;
+        font-size: 30px;
         padding:15px 0;
       }
     }
@@ -136,6 +136,44 @@
     }
   }
 }
+.ls-list{
+  margin:15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fff;
+  box-sizing: border-box;
+  .ls-item-wrap{
+    &:first-child{
+      margin-right:15px;
+    }
+    .ls-li{
+      overflow: hidden;
+      margin-top:20px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      .ls-img-wrap{
+        width:100%;
+        overflow: hidden;
+        border-radius:10px 10px 0  0;
+      }
+      .ls-txt-wrap{
+        width:100%;
+        min-height: 80px;
+        border:1px solid #e5e5e6;
+        padding:20px 10px;
+        border-top:none;
+        box-sizing: border-box;
+        border-radius: 0 0 15px 10px;
+        font-weight: 700;
+        color:#333;
+        font-size: 28px;
+      }
+    }
+  }
+}
 </style>
 <template>
   <div class="container">
@@ -180,22 +218,17 @@
               <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选推荐
             </div>
             <no-data v-if="nodata"></no-data>
-            <div v-else>
-              <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
-                <div class="list-body-title">
-                  作者：{{item.nickname}}
+            <div class="ls-list">
+              <div class="ls-item-wrap">
+                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==0">
+                  <img class="ls-img-wrap" mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <div class="ls-txt-wrap" @click="goDetailPath(item)">{{item.title}}</div>
                 </div>
-                <div class="list-body-items">
-                  <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
-                  <div class="task-show-img" >
-                    <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
-                      <img mode="aspectFill" :src="item.imgs[0]" alt="">
-                    </div>
-                    <div class="lg-right" v-if="item.imgs.length>1">
-                      <div class="img-r" :class="{'height-cover':item.imgs.length==2}" v-if="item.imgs.length>1"   @click="lookoutImg(item.imgs[1],item.imgs)" ><img  mode="aspectFill" :src="item.imgs[1]" alt=""></div>
-                      <div class="img-r" v-if="item.imgs.length>2"  @click="lookoutImg(item.imgs[2],item.imgs)"><img  mode="aspectFill" :src="item.imgs[2]" alt=""  ></div>
-                    </div>
-                  </div>
+              </div>
+              <div class="ls-item-wrap">
+                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==1">
+                  <img class="ls-img-wrap"  mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <div class="ls-txt-wrap"  @click="goDetailPath(item)">{{item.title}}</div>
                 </div>
               </div>
             </div>
@@ -233,7 +266,7 @@ export default {
           path:'/pages/news/main'
         },
         {
-          name:"玩法整理",
+          name:"奇遇和副本",
           img:"/static/imgs/qiyu.png",
           path:'/pages/task/main'
         },
@@ -284,7 +317,8 @@ export default {
         "https://i.loli.net/2018/08/26/5b82193887624.jpg",
         "https://i.loli.net/2018/08/26/5b82193898ba3.jpg",
         "https://i.loli.net/2018/08/26/5b8219389f7ed.jpg"
-      ]
+      ],
+      typeGood:[1,2,3,4,5,6]
     }
   },
   mounted(){
@@ -344,12 +378,6 @@ export default {
     },
 
     changeBanner(index){ },
-    lookoutImg(url){
-      wx.previewImage({
-        current: url,
-        urls:[url]
-      })
-    },
     golistPath(model){
       wx.navigateTo({
         url:'/pages/article/main?_id='+model.id+'&_type='+model._type

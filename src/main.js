@@ -32,31 +32,31 @@ export default {
             'pages/strategy/main',
             'pages/publish/main'
         ],
-        tabBar: {
-            color: "#2c2c2c",
-            backgroundColor: "#c2c2c2",
-            position: "bottom",
-            selectedColor: "#c90915",
-            list: [{
-                    pagePath: "pages/index/main",
-                    text: "首页",
-                    iconPath: "/static/imgs/home.png",
-                    selectedIconPath: "/static/imgs/home_act.png"
-                },
-                {
-                    pagePath: "pages/community/main",
-                    text: "八卦客栈",
-                    iconPath: "/static/imgs/shequ.png",
-                    selectedIconPath: "/static/imgs/shequ_act.png"
-                }
-                // , {
-                //     pagePath: "pages/my/main",
-                //     text: "我的",
-                //     iconPath: "/static/imgs/my.png",
-                //     selectedIconPath: "/static/imgs/my_act.png"
-                // }
-            ]
-        },
+        // tabBar: {
+        //     color: "#2c2c2c",
+        //     backgroundColor: "#c2c2c2",
+        //     position: "bottom",
+        //     selectedColor: "#c90915",
+        //     list: [{
+        //             pagePath: "pages/index/main",
+        //             text: "首页",
+        //             iconPath: "/static/imgs/home.png",
+        //             selectedIconPath: "/static/imgs/home_act.png"
+        //         },
+        //         {
+        //             pagePath: "pages/community/main",
+        //             text: "八卦客栈",
+        //             iconPath: "/static/imgs/shequ.png",
+        //             selectedIconPath: "/static/imgs/shequ_act.png"
+        //         }
+        //         , {
+        //             pagePath: "pages/my/main",
+        //             text: "我的",
+        //             iconPath: "/static/imgs/my.png",
+        //             selectedIconPath: "/static/imgs/my_act.png"
+        //         }
+        //     ]
+        // },
         window: {
             backgroundTextStyle: 'black',
             navigationBarBackgroundColor: '#c2c2c2',

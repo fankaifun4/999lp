@@ -37,7 +37,7 @@
       }
       .text{
         margin-top:15rpx;
-        font-size: 26rpx;
+        font-size: 30rpx;
         text-align: center;
       }
 
@@ -47,7 +47,7 @@
     }
   }
   .task-titles{
-    font-size: 38px;
+    font-size: 30px;
     margin-bottom:15rpx;
   }
   .task-show-img{
@@ -110,7 +110,7 @@
               作者：{{item.nickname}}
             </div>
             <div class="list-body-items">
-              <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+              <div class="task-titles fs-b" @click="goDetailPath(item)">{{item.title}}</div>
               <div class="task-show-img" >
                 <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
                   <img mode="aspectFill" :src="item.imgs[0]" alt="">
@@ -161,11 +161,11 @@
                this.playerXd=res.data.info
                this.page+=1
                this.loader=false
-             },1500)
+             },500)
            }else{
              setTimeout(()=>{
               this.loader=false
-             },1500)
+             },500)
            }
         })
       },

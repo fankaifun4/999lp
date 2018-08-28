@@ -33,7 +33,7 @@
       }
       .text{
         margin-top:15rpx;
-        font-size: 26rpx;
+        font-size: 30rpx;
         text-align: center;
       }
 
@@ -116,11 +116,11 @@
         <no-data v-if="nodata"></no-data>
         <div v-else>
           <div class="list-body"  v-for="(item,index) in playerXd" :key="index" >
-            <div class="list-body-title">
+            <div class="list-body-title task-titles">
               作者：{{item.nickname}}
             </div>
             <div class="list-body-items">
-              <div class="task-titles ts-d" @click="goDetailPath(item)">{{item.title}}</div>
+              <div class="task-titles fs-b" @click="goDetailPath(item)">{{item.title}}</div>
               <div class="task-show-img" >
                 <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
                   <img mode="aspectFill" :src="item.imgs[0]" alt="">
