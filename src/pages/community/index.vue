@@ -140,11 +140,9 @@
         <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
-              <img class="avart mr-20" :src="item.avatar" alt="">
-              {{item.nickname}}
-              <div> {{item.createtime}} </div>
+              <div class="fs-b"> {{item.createtime}} </div>
             </div>
-            <div class="action" refs="tt">
+            <div class="action" v-if="false">
               <div class="zan">
                 <img v-if="item.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
                 <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(item)"  >
@@ -153,7 +151,7 @@
             </div>
           </div>
           <div class="list-body">
-            <div class="task-titles ts-d pd-tb15" @click="goDetailPath(item)">{{item.title}}</div>
+            <div class="task-titles ts-d pd-tb15 fs-b" @click="goDetailPath(item)">{{item.title}}</div>
             <div class="task-show-img" v-if="item.imgs.length" >
               <div class="lg-left" :class="{flex1:item.imgs.length<2}" @click="lookoutImg(item.imgs[0],item.imgs)">
                 <img mode="aspectFill" :src="item.imgs[0]" alt="">

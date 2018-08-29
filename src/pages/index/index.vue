@@ -1,4 +1,7 @@
 <style lang="scss" scoped>
+.container{
+  flex: 1;
+}
 .mg-t18{
   margin-top: 18rpx;
 }
@@ -177,7 +180,7 @@
 </style>
 <template>
   <div class="container">
-    <div class=" scroll-wrap">
+    <scroll-view scroll-y style="height: 100%" @scrolltolower="scrolltolower">
       <div class="index-wrap" >
         <div class="banner">
           <banner :imgData="bannerList" @change="changeBanner"  ></banner>
@@ -232,10 +235,11 @@
                 </div>
               </div>
             </div>
+            <loading-dom :isShow="loading"></loading-dom>
           </div>
         </div>
       </div>
-    </div>
+    </scroll-view>
   </div>
 </template>
 <script>
@@ -243,17 +247,19 @@ import indexDom from '../../components/main/index'
 import banner from '../../components/banner'
 import noData from '../../components/noData'
 import {getGonglue} from '../../server/gonglue'
-
+import loadingDom from '../../components/loading'
 export default {
   components:{
     indexDom,
     banner,
-    noData
+    noData,
+    loadingDom
   },
   data () {
     return {
       userInfo: {},
       nodata:false,
+      loading:false,
       indexNavlist:[
         {
           name:"职业流派",
@@ -318,7 +324,7 @@ export default {
         "https://i.loli.net/2018/08/26/5b82193898ba3.jpg",
         "https://i.loli.net/2018/08/26/5b8219389f7ed.jpg"
       ],
-      typeGood:[1,2,3,4,5,6]
+      page:1
     }
   },
   mounted(){
@@ -336,13 +342,22 @@ export default {
         url:"/pages/strategyDetail/main?_id="+item.id
       })
     },
-    getData(cb){
-      getGonglue({page:1},(er,res)=>{
+    scrolltolower(){
+      if(this.loading) return
+      this.loading=true
+      setTimeout(()=>{
+        this.getData()
+      },500)
+    },
+    getData(){
+      this.loading=true
+      getGonglue({page:this.page},(er,res)=>{
         if(res && res.data && res.data.info && res.data.info.length){
             this.playerXd=res.data.info
-            this.loader=false
+            this.page+=1
+            this.loading=false
         }else{
-            this.loader=false
+            this.loading=false
         }
       })
     },

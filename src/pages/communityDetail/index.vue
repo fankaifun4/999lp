@@ -144,9 +144,9 @@
     <div class="task-top">
       <div class="user">
         <img class="avatar" :src="masterInfo.avatar" alt="">
-        <div class="nickname">{{ masterInfo.title }}</div>
+        <div class="nickname fs-b">{{ masterInfo.title }}</div>
       </div>
-      <div class="r-act">
+      <div class="r-act" v-if="false">
         <div class="share">
           <img src="/static/imgs/share.png" alt="">
         </div>
@@ -216,7 +216,7 @@
       setRichText( template='' ){
         wx.showLoading()
         const regex = new RegExp('<img', 'gi');
-        template = template.replace(regex, `<img style="max-width: 100%;"`);
+        template = template.replace(regex, `<img style="width: 100%; height:auto"`);
         this.article=template
         wx.hideLoading()
       },
