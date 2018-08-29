@@ -70,6 +70,8 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      font-size: 28px;
+      font-weight: 300;
       .avart{
         width:81rpx;
         height:81rpx;
@@ -136,11 +138,10 @@
       <img src="/static/imgs/add.png" alt="">
     </div>
     <scroll-view  scroll-y  class="scroll-wrap" :scroll-with-animation="true"  lower-threshold="50" @scrolltolower="getData">
-      <div>
-        <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
+      <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
-              <div class="fs-b"> {{item.createtime}} </div>
+              <div> {{item.createtime}} </div>
             </div>
             <div class="action" v-if="false">
               <div class="zan">
@@ -163,7 +164,6 @@
             </div>
           </div>
         </div>
-      </div>
       <Loading-dom  :isShow="loading" ></Loading-dom>
     </scroll-view>
   </div>
@@ -250,7 +250,7 @@
               this.playerXd =this.playerXd.concat(data.info).reverse()
               this.page+=1
             }
-          },1500)
+          },500)
         })
       },
       addZan(model){
