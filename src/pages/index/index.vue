@@ -221,7 +221,7 @@
               <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选推荐
             </div>
             <no-data v-if="nodata"></no-data>
-            <div class="ls-list">
+            <div class="ls-list" v-else>
               <div class="ls-item-wrap">
                 <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==0">
                   <img class="ls-img-wrap" mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
@@ -246,8 +246,9 @@
 import indexDom from '../../components/main/index'
 import banner from '../../components/banner'
 import noData from '../../components/noData'
-import {getGonglue} from '../../server/gonglue'
 import loadingDom from '../../components/loading'
+import {getGonglue} from '../../server/gonglue'
+
 export default {
   components:{
     indexDom,
@@ -352,9 +353,13 @@ export default {
     getData(){
       this.loading=true
       getGonglue({page:this.page},(er,res)=>{
+        if(er){
+          this.loading=false
+          this.nodata=true
+          return
+        }
         if(res && res.data && res.data.info && res.data.info.length){
             this.playerXd=res.data.info
-            this.page+=1
             this.loading=false
         }else{
             this.loading=false

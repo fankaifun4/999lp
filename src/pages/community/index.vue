@@ -137,7 +137,12 @@
     <div class="publish" @click="publish" v-if="false">
       <img src="/static/imgs/add.png" alt="">
     </div>
-    <scroll-view  scroll-y  class="scroll-wrap" :scroll-with-animation="true"  lower-threshold="50" @scrolltolower="getData">
+    <no-data v-if="nodata"></no-data>
+    <scroll-view  scroll-y  class="scroll-wrap" :scroll-with-animation="true"  lower-threshold="50"
+                  @scrolltolower="getData"
+                  @scrolltoupper="uploadData"
+    >
+      <Loading-dom  :isShow="uplodaer" ></Loading-dom>
       <div class="ct-list" v-for="(item,index) in playerXd" :key="index" >
           <div class="ct-list-header comm-cnt">
             <div class="title">
@@ -173,9 +178,11 @@
   import {addZan} from '../../server/community'
   import {loginWx} from '../../server/login'
   import LoadingDom from '@/components/loading'
+  import noData from '../../components/noData'
   export  default {
     components:{
-      LoadingDom
+      LoadingDom,
+      noData
     },
     data(){
       return{
@@ -186,13 +193,34 @@
         page:1,
         list:[],
         playerXd:[],
-        loading:false
+        loading:false,
+        uplodaer:false,
+        nodata:false
       }
     },
     mounted(){
       this.getData()
     },
     methods:{
+      uploadData(){
+        if( this.uplodaer ) return
+        this.uplodaer=true
+        getCommunity({page:1},(err,res)=>{
+          if(err){
+            this.nodata=true
+            return
+          }
+          setTimeout(()=>{
+            this.uplodaer=false
+            if(!res) return
+            let data = res.data
+            if(data.info && data.info.length){
+              this.nodata=false
+              this.playerXd =data.info
+            }
+          },800)
+        })
+      },
       publish(){
         if(wx.getStorageSync('token')){
           wx.navigateTo({
@@ -243,11 +271,16 @@
         if( this.loading ) return
         this.loading=true
         getCommunity({page:this.page},(err,res)=>{
+          if(err){
+            this.nodata=true
+            return
+          }
           setTimeout(()=>{
            this.loading=false
             let data = res.data
             if(data.info && data.info.length){
-              this.playerXd =this.playerXd.concat(data.info).reverse()
+              this.nodata=false
+              this.playerXd =this.playerXd.concat(data.info)
               this.page+=1
             }
           },500)

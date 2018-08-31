@@ -37,13 +37,15 @@
       }
     }
     .r-act{
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      margin-left: 30px;
       .share{
-        width:40rpx;
-        height:40rpx;
-        margin-right:20rpx;
+        width:150px;
+        height:60px;
+        margin-right:20px;
+        font-size: 28px;
+        line-height: 60px;
+        background:#3498db;
+        color: #fff;
         >img{
           width:100%;
           height:100%;
@@ -65,7 +67,18 @@
           line-height: 50rpx;
           padding:0 25rpx;
         }
-
+        .zan{
+          height:80rpx;
+          overflow: hidden;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          img{
+            width:40rpx;
+            height:40rpx;
+            margin-right:10px;
+          }
+        }
       }
     }
   }
@@ -139,12 +152,12 @@
           <div class="nickname">{{ dataInfo.title }}</div>
         </div>
         <div class="r-act">
-          <div class="share" @click="shareTick" v-if="false">
-            <img src="/static/imgs/share.png" alt="">
-          </div>
+          <button class="share" open-type="share"> 分享</button>
         </div>
       </div>
-      <div class="task-content">
+      <no-data v-if="nodata"></no-data>
+      <div class="task-content" v-else>
+        <loading-dom :isShow="loading"></loading-dom>
         <div class="tast-body">
           <rich-text :nodes="article"></rich-text>
         </div>
@@ -163,10 +176,12 @@
 </template>
 <script>
   import  {getQiyuDetail} from '../../server/task'
-  import noData from '@/components/noData'
+  import noData from '../../components/noData'
+  import loadingDom from '../../components/loading'
   export default {
     components:{
-      noData
+      noData,
+      loadingDom
     },
     data(){
       return {
@@ -174,7 +189,7 @@
         taskName:"",
         _type:'1',
         _id:1,
-        isloading: true,
+        isloading: false,
         comment:"",
         userInfo:null,
         insertData:false,
@@ -192,8 +207,19 @@
       this.userInfo=wx.getStorageSync('userInfo')
       this.getData(this._id,this._type)
     },
-    computed:{
-
+    onShareAppMessage(){
+      return{
+        title:"逆水寒奇遇："+ this.dataInfo.title,
+        path: '/pages/taskDetail/main?_id='+this._id+'&_type='+this._type,
+        success: function (res) {
+          // 转发成功
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log("转发失败:" + JSON.stringify(res));
+        },
+      }
     },
     methods:{
       getRichData( html ){
@@ -204,30 +230,23 @@
         this.isloading=false
       },
       getData(id,_type){
-        wx.showLoading()
+        this.loading=true
         getQiyuDetail({
           id,
           _type
         },(err,res)=>{
-          wx.hideLoading()
-          this.dataInfo= res.data.info
-          if(res.data.info){
+          this.loading=false
+          if(err){
+            this.nodata=true
+            return
+          }
+          if(res.data && res.data.info){
+            this.dataInfo= res.data.info
             this.nodata=false
             let template=this.dataInfo.content
             this.getRichData(template)
           }else{
             this.nodata=true
-          }
-        })
-      },
-      shareTick(){
-        wx.showShareMenu({
-          withShareTicket:true,
-          success:res=>{
-
-          },
-          fail:err=>{
-
           }
         })
       },

@@ -28,12 +28,14 @@
         <img class="top-bgs" mode="aspectFill" :src="banner" alt="">
       </div>
     </div>
-    <div class="ct-b">
+    <no-data v-if="nodata"></no-data>
+    <div v-else class="ct-b">
       <!--小吉-->
       <div class="ct-list">
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（小吉）
         </div>
+        <loading-dom :isShow="loading"></loading-dom>
         <div class="list-body" v-for="(item,index) in qiyuList.xj" :key="index" >
           <div class="list-body-title fs-b ts-d list-xj" @click="toDetail(item)">
             {{item.title}}
@@ -47,6 +49,7 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（中吉）
         </div>
+        <loading-dom :isShow="loading"></loading-dom>
         <div class="list-body" v-for="(item,index) in qiyuList.zj" :key="index" >
           <div class="list-body-title fs-b ts-d list-zj" @click="toDetail(item)">
             {{item.title}}
@@ -60,6 +63,7 @@
         <div class="ct-list-header">
           <img mode="aspectFit" class="icon" src="/static/imgs/remen.png" alt=""> 奇遇（大吉，旷世）
         </div>
+        <loading-dom :isShow="loading"></loading-dom>
         <div class="list-body" v-for="(item,index) in qiyuList.dj" :key="index" >
           <div class="list-body-title fs-b ts-d list-dj"  @click="toDetail(item)">
             {{item.title}}
@@ -72,12 +76,20 @@
 </template>
 <script>
   import {getQiyulist} from '../../server/task'
+  import noData from '../../components/noData'
+  import loadingDom from '../../components/loading'
   export default {
+    components:{
+      noData,
+      loadingDom
+    },
     data(){
       return {
         banner:"https://i.loli.net/2018/08/26/5b8247564b604.jpg",
         qiyuList:[],
-        _type:1
+        _type:1,
+        loading:true,
+        nodata:false
       }
     },
     created(){
@@ -85,7 +97,14 @@
     },
     methods:{
       getData(){
+        this.loading=true
         getQiyulist((er,res)=>{
+          this.loading=false
+          if(er){
+            this.nodata=true
+            return
+          }
+          this.nodata=false
           this.qiyuList = res.data
         })
       },

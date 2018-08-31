@@ -20,7 +20,7 @@
     flex-shrink: 0;
     .user{
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       .avatar{
         width:100rpx;
@@ -35,13 +35,15 @@
       }
     }
     .r-act{
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      margin-left: 30px;
       .share{
-        width:40rpx;
-        height:40rpx;
-        margin-right:20rpx;
+        width:150px;
+        height:60px;
+        margin-right:20px;
+        font-size: 28px;
+        line-height: 60px;
+        background:#3498db;
+        color: #fff;
         >img{
           width:100%;
           height:100%;
@@ -143,14 +145,11 @@
   <div class="bc-sp" >
     <div class="task-top">
       <div class="user">
-        <img class="avatar" :src="masterInfo.avatar" alt="">
         <div class="nickname fs-b">{{ masterInfo.title }}</div>
       </div>
-      <div class="r-act" v-if="false">
-        <div class="share">
-          <img src="/static/imgs/share.png" alt="">
-        </div>
-        <div class="action">
+      <div class="r-act" >
+        <button class="share" open-type="share">分享</button>
+        <div class="action" v-if="false">
           <div class="zan">
             <img v-if="masterInfo.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
             <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(masterInfo)" >
@@ -160,7 +159,9 @@
       </div>
     </div>
     <div class="task-content">
+      <no-data v-if="nodata"></no-data>
       <div class="tast-body">
+          <loading-dom :isShow="loading"></loading-dom>
           <rich-text :nodes="article" type="node" class="rich-cont"></rich-text>
       </div>
     </div>
@@ -176,9 +177,14 @@
   </div>
 </template>
 <script>
-  import {getDetail} from  '../../server/community'
-  import {addZan} from '../../server/community'
+  import {getDetail,addZan} from  '../../server/community'
+  import loadingDom from '../../components/loading'
+  import noData from '../../components/noData'
   export default {
+    components:{
+      loadingDom,
+      noData
+    },
     data(){
       return {
         article:[],
@@ -187,7 +193,9 @@
         _id:1,
         comment:"",
         userInfo:null,
-        masterInfo:{}
+        masterInfo:{},
+        loading:false,
+        nodata:false
       }
     },
     mounted(options){
@@ -198,27 +206,44 @@
       this._id=options._id
       this.userInfo=wx.getStorageSync('userInfo')
     },
+    onShareAppMessage(){
+      return{
+        title:"逆水寒八卦："+ this.masterInfo.title,
+        path: '/pages/communityDetail/main?_id='+this._id,
+        imageUrl:"https://i.loli.net/2018/09/01/5b8989ce2adf9.jpg",
+        success: function (res) {
+          // 转发成功
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log("转发失败:" + JSON.stringify(res));
+        },
+      }
+    },
     computed:{
     },
     methods:{
       getData(){
+        this.loading=true
         getDetail({
-          _id:this._id,
-          _type:this._type
+          _id:this._id
         },(er,res)=>{
             if(er){
+              this.loading=false
+              this.nodata=true
             }else{
+              this.nodata=false
               this.masterInfo = res.data.info
               this.setRichText(this.masterInfo.content)
             }
         })
       },
       setRichText( template='' ){
-        wx.showLoading()
         const regex = new RegExp('<img', 'gi');
         template = template.replace(regex, `<img style="width: 100%; height:auto"`);
         this.article=template
-        wx.hideLoading()
+        this.loading=false
       },
       addZan(model){
         if(wx.getStorageSync('token')){
@@ -232,7 +257,7 @@
         }else{
           this.getSetting()
         }
-      }
+      },
     }
   }
 </script>

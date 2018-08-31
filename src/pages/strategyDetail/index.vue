@@ -37,13 +37,15 @@
       }
     }
     .r-act{
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      margin-left: 30px;
       .share{
-        width:40rpx;
-        height:40rpx;
-        margin-right:20rpx;
+        width:150px;
+        height:60px;
+        margin-right:20px;
+        font-size: 28px;
+        line-height: 60px;
+        background:#3498db;
+        color: #fff;
         >img{
           width:100%;
           height:100%;
@@ -65,7 +67,18 @@
           line-height: 50rpx;
           padding:0 25rpx;
         }
-
+        .zan{
+          height:80rpx;
+          overflow: hidden;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          img{
+            width:40rpx;
+            height:40rpx;
+            margin-right:10px;
+          }
+        }
       }
     }
   }
@@ -135,13 +148,10 @@
   <div class="container bc-sp" >
     <div class="task-top">
       <div class="user">
-        <img class="avatar" :src="userInfo.avatarUrl" alt="" v-if="true">
         <div class="nickname">{{ dataInfo.title }}</div>
       </div>
       <div class="r-act">
-        <div class="share" @click="shareTick">
-          <img src="/static/imgs/share.png" alt="">
-        </div>
+        <button class="share" open-type="share">分享</button>
         <div class="action" v-if="false">
           <div class="follow">已关注</div>
         </div>
@@ -188,9 +198,25 @@
       this.userInfo=wx.getStorageSync('userInfo')
       this.getData(this._id)
     },
+    onShareAppMessage(){
+      return{
+        title:"逆水寒副本攻略："+ this.dataInfo.title,
+        path: '/pages/strategyDetail/main?_id='+this._id,
+        imageUrl:"https://i.loli.net/2018/09/01/5b8989ce2adf9.jpg",
+        success: function (res) {
+          // 转发成功
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log("转发失败:" + JSON.stringify(res));
+        }
+      }
+    },
     computed:{
 
     },
+
     methods:{
       getRichData( html ){
         let template= html

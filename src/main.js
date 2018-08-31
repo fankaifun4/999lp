@@ -30,6 +30,7 @@ export default {
             'pages/taskDetail/main',
             'pages/taskList/main',
             'pages/strategy/main',
+            'pages/strategyDetail/main',
             'pages/publish/main'
         ],
         tabBar: {
