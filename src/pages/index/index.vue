@@ -1,22 +1,14 @@
 <style lang="scss" scoped>
-.container{
-  flex: 1;
-}
 .mg-t18{
   margin-top: 18rpx;
 }
 .index-wrap{
-  position: relative;
-  z-index: 2;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  display: block;
   .banner{
     background:#fff;
   }
   .index-nav{
     position:relative;
-    top:-90rpx;
+    top:-10rpx;
     margin:0 15rpx;
     background: #fff;
     border-radius: 10rpx 10rpx 0 0;
@@ -179,8 +171,7 @@
 }
 </style>
 <template>
-  <div class="container">
-    <scroll-view scroll-y style="height: 100%" @scrolltolower="scrolltolower">
+  <div class="">
       <div class="index-wrap" >
         <div class="banner">
           <banner :imgData="bannerList" @change="changeBanner"  ></banner>
@@ -194,7 +185,7 @@
           </index-dom>
           <div class="hr"></div>
         </div>
-        <div class="content" style="margin-top:-70rpx;">
+        <div class="content" >
           <div class="content-list">
             <div class="list-header">
               <img class="icon" src="/static/imgs/remen.png" alt="">美图推荐
@@ -216,9 +207,30 @@
            <div class="hr"></div>
         </div>
         <div class="content">
+          <div class="content-list" style="margin-bottom:20rpx;">
+            <div class="list-header">
+              <img class="icon" src="/static/imgs/jingxuan.png" alt="">八卦头条
+            </div>
+            <no-data v-if="baguaNodata"></no-data>
+            <div class="ls-list" v-else>
+              <div class="ls-item-wrap">
+                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==0">
+                  <img class="ls-img-wrap" mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <div class="ls-txt-wrap" @click="goCommitPath(item)">{{item.title}}</div>
+                </div>
+              </div>
+              <div class="ls-item-wrap">
+                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==1">
+                  <img class="ls-img-wrap"  mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
+                  <div class="ls-txt-wrap"  @click="goCommitPath(item)">{{item.title}}</div>
+                </div>
+              </div>
+            </div>
+            <loading-dom :isShow="bgLoading"></loading-dom>
+          </div>
           <div class="content-list">
             <div class="list-header">
-              <img class="icon" src="/static/imgs/jingxuan.png" alt="">精选推荐
+              <img class="icon" src="/static/imgs/jingxuan.png" alt="">攻略推荐
             </div>
             <no-data v-if="nodata"></no-data>
             <div class="ls-list" v-else>
@@ -239,7 +251,6 @@
           </div>
         </div>
       </div>
-    </scroll-view>
   </div>
 </template>
 <script>
@@ -248,7 +259,7 @@ import banner from '../../components/banner'
 import noData from '../../components/noData'
 import loadingDom from '../../components/loading'
 import {getGonglue} from '../../server/gonglue'
-
+import {getCommunity} from '../../server/home'
 export default {
   components:{
     indexDom,
@@ -259,8 +270,32 @@ export default {
   data () {
     return {
       userInfo: {},
+      baguaNodata:false,
       nodata:false,
       loading:false,
+      bgLoading:false,
+      bannerList:[
+        {
+          src:'https://n.netease.com/data/attachment/portal/201807/27/133428hcwzowg1e6rrfnwm.jpg',
+        },
+        {
+          src:'https://n.netease.com/data/attachment/portal/201807/26/170507jp0311eb1qxqfjxl.jpg',
+        },
+        {
+          src: 'https://n.netease.com/data/attachment/portal/201807/26/102109ux9y8o4t54b1vttz.jpg'
+        },
+        {
+          src: 'https://n.netease.com/data/attachment/portal/201807/25/133236hppw6mll1pzx64n4.png'
+        },
+        {
+          src: 'https://nie.res.netease.com/r/pic/20180620/b5352db9-3508-433f-8320-d9eb64fe4510.jpg'
+        },
+        {
+          src: 'https://nie.res.netease.com/r/pic/20180620/7b47a939-3147-4b8f-9901-30f5c8a160d4.jpg'
+        }
+      ],
+      playerXd:[],
+      playerBg:[],
       indexNavlist:[
         {
           name:"职业流派",
@@ -288,32 +323,6 @@ export default {
         //   path:'/pages/activityList/main'
         // }
       ],
-      userInfo:{
-        avatarUrl:"",
-        nickName:""
-      },
-      bannerList:[
-        {
-          src:'https://n.netease.com/data/attachment/portal/201807/27/133428hcwzowg1e6rrfnwm.jpg',
-        },
-        {
-          src:'https://n.netease.com/data/attachment/portal/201807/26/170507jp0311eb1qxqfjxl.jpg',
-        },
-        {
-          src: 'https://n.netease.com/data/attachment/portal/201807/26/102109ux9y8o4t54b1vttz.jpg'
-        },
-        {
-          src: 'https://n.netease.com/data/attachment/portal/201807/25/133236hppw6mll1pzx64n4.png'
-        },
-        {
-          src: 'https://nie.res.netease.com/r/pic/20180620/b5352db9-3508-433f-8320-d9eb64fe4510.jpg'
-        },
-        {
-          src: 'https://nie.res.netease.com/r/pic/20180620/7b47a939-3147-4b8f-9901-30f5c8a160d4.jpg'
-        }
-      ],
-      goodList:[],
-      playerXd:[],
       meitu:[
         "https://i.loli.net/2018/08/26/5b82182460fad.jpg",
         "https://i.loli.net/2018/08/26/5b8218246c2c4.jpg",
@@ -325,13 +334,34 @@ export default {
         "https://i.loli.net/2018/08/26/5b82193898ba3.jpg",
         "https://i.loli.net/2018/08/26/5b8219389f7ed.jpg"
       ],
+      userInfo:{},
       page:1
     }
   },
+  onPullDownRefresh(){
+    this.getData()
+    this.getBgData()
+  },
   mounted(){
     this.getData()
+    this.getBgData()
+  },
+  onShareAppMessage(){
+    return{
+      title:"逆水寒攻略资料查询",
+      path: '/pages/index/main',
+      success: function (res) {
+        // 转发成功
+        console.log("转发成功:" + JSON.stringify(res));
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log("转发失败:" + JSON.stringify(res));
+      }
+    }
   },
   methods: {
+
     lookoutImg(cur,imgs){
       wx.previewImage({
         current:cur,
@@ -343,26 +373,46 @@ export default {
         url:"/pages/strategyDetail/main?_id="+item.id
       })
     },
-    scrolltolower(){
-      if(this.loading) return
-      this.loading=true
-      setTimeout(()=>{
-        this.getData()
-      },500)
+    goCommitPath(item){
+      wx.navigateTo({
+        url:"/pages/communityDetail/main?_id="+item.id
+      })
     },
     getData(){
       this.loading=true
       getGonglue({page:this.page},(er,res)=>{
+        wx.stopPullDownRefresh()
         if(er){
           this.loading=false
           this.nodata=true
           return
         }
         if(res && res.data && res.data.info && res.data.info.length){
-            this.playerXd=res.data.info
-            this.loading=false
+          this.playerXd=res.data.info
+          this.loading=false
+          this.nodata=false
         }else{
-            this.loading=false
+          this.loading=false
+          this.nodata=true
+        }
+      })
+    },
+    getBgData(){
+      this.bgLoading=true
+      getCommunity({page:this.page},(er,res)=>{
+        wx.stopPullDownRefresh()
+        if(er){
+          this.bgLoading=false
+          this.baguaNodata=true
+          return
+        }
+        if(res && res.data && res.data.info && res.data.info.length){
+          this.playerBg=res.data.info
+          this.bgLoading=false
+          this.baguaNodata=false
+        }else{
+          this.bgLoading=false
+          this.baguaNodata=true
         }
       })
     },
@@ -387,9 +437,6 @@ export default {
     isLogin(){
 
     },
-    clickHandle (msg, ev) {
-      // console.log('clickHandle:', msg, ev)
-    },
     goPath(model){
       let url=model.path
       wx.navigateTo({
@@ -403,9 +450,6 @@ export default {
         url:'/pages/article/main?_id='+model.id+'&_type='+model._type
       })
     }
-  },
-  created () {
-    this.isLogin()
   }
 }
 </script>

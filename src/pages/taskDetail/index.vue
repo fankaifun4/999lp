@@ -141,7 +141,20 @@
       }
     }
   }
-
+  .show-watch{
+    margin:0 15px 15px;
+    padding:15px;
+    height:40px;
+    background:#fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img{
+      width:30px;
+      height:30px;
+      margin-right:10px;
+    }
+  }
 </style>
 
 <template>
@@ -161,6 +174,10 @@
         <div class="tast-body">
           <rich-text :nodes="article"></rich-text>
         </div>
+      </div>
+      <div class="show-watch">
+        <img src="https://lg-24gqn7nu-1257021853.cos.ap-shanghai.myqcloud.com/icon_look.png" alt="">
+        {{ dataDetail.watch }}
       </div>
       <div class="fixed-btn" v-if="false">
         <div class="">

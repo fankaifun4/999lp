@@ -144,7 +144,8 @@
         banner:"https://nie.res.netease.com/r/pic/20180620/1f73d859-6f6e-4d46-a2c5-e7716f54df31.jpg",
         playerXd:[],
         page:1,
-        loader:true
+        loader:true,
+        loadOver:false
       }
     },
     create(){
@@ -155,12 +156,24 @@
     },
     methods:{
       getData(){
+        if(this.loadOver){
+          wx.showToast({
+            icon:"none",
+            title:"已加载全部"
+          })
+          this.loader=false
+          return
+        }
         getGonglue({page:this.page},(er,res)=>{
            if(res && res.data && res.data.info && res.data.info.length){
              setTimeout(()=>{
-               this.playerXd=res.data.info
-               this.page+=1
                this.loader=false
+               this.playerXd=this.playerXd.concat(res.data.info)
+               if( res.data.info.length<6 ){
+                 this.loadOver=true
+                 return
+               }
+               this.page+=1
              },500)
            }else{
              setTimeout(()=>{

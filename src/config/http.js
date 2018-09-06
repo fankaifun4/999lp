@@ -22,7 +22,8 @@ class $http {
   }
   $request(method,callback){
     const _this = this
-    const token = wx.getStorageSync('token')
+    const token = wx.getStorageSync('token');
+    wx.showLoading()
     wx.request({
       url:_this.url,
       header:{
@@ -40,6 +41,9 @@ class $http {
       },
       fail(err){
         callback(err)
+      },
+      complete(){
+        wx.hideLoading()
       }
     })
   }

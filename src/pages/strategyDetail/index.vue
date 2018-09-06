@@ -22,6 +22,19 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      .watch{
+        position: relative;
+        margin-left:30px;
+        text-indent: 40px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img{
+          width:30px;
+          height:30px;
+          margin-left:15px;
+        }
+      }
       .avatar{
         width:100rpx;
         height: 100rpx;
@@ -141,7 +154,20 @@
       }
     }
   }
-
+  .show-watch{
+    margin:0 15px 15px;
+    padding:15px;
+    height:40px;
+    background:#fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img{
+      width:30px;
+      height:30px;
+      margin-right:10px;
+    }
+  }
 </style>
 
 <template>
@@ -162,6 +188,11 @@
           <rich-text :nodes="article"></rich-text>
       </div>
     </div>
+    <div class="show-watch">
+      <img src="https://lg-24gqn7nu-1257021853.cos.ap-shanghai.myqcloud.com/icon_look.png" alt="">
+      {{ dataInfo.watch }}
+    </div>
+
     <div class="fixed-btn" v-if="false">
       <div class="">
         <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
@@ -202,7 +233,6 @@
       return{
         title:"逆水寒副本攻略："+ this.dataInfo.title,
         path: '/pages/strategyDetail/main?_id='+this._id,
-        imageUrl:"https://i.loli.net/2018/09/01/5b8989ce2adf9.jpg",
         success: function (res) {
           // 转发成功
           console.log("转发成功:" + JSON.stringify(res));
@@ -234,17 +264,6 @@
           this.dataInfo= res.data.info
           let template=this.dataInfo.content
           this.getRichData(template)
-        })
-      },
-      shareTick(){
-        wx.showShareMenu({
-          withShareTicket:true,
-          success:res=>{
-
-          },
-          fail:err=>{
-
-          }
         })
       },
       sendMsg(){

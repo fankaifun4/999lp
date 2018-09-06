@@ -138,7 +138,20 @@
       }
     }
   }
-
+  .show-watch{
+    margin:0 15px 15px;
+    padding:15px;
+    height:40px;
+    background:#fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img{
+      width:30px;
+      height:30px;
+      margin-right:10px;
+    }
+  }
 </style>
 
 <template>
@@ -149,13 +162,6 @@
       </div>
       <div class="r-act" >
         <button class="share" open-type="share">分享</button>
-        <div class="action" v-if="false">
-          <div class="zan">
-            <img v-if="masterInfo.isSupport" src="/static/imgs/icon/icon_sc.png" alt="">
-            <img v-else   src="/static/imgs/icon/nom.png" alt=""  @click="addZan(masterInfo)" >
-            {{masterInfo.zan}}
-          </div>
-        </div>
       </div>
     </div>
     <div class="task-content">
@@ -165,14 +171,9 @@
           <rich-text :nodes="article" type="node" class="rich-cont"></rich-text>
       </div>
     </div>
-    <div class="fixed-btn" v-if="false">
-      <div class="">
-        <div class="share"><img mode="aspectFit" class="share-in" src="/static/imgs/share.png" alt=""></div>
-      </div>
-      <div class="long">
-        <input type="text"  class="comment" v-model="comment" >
-        <button class="sendMsg enabled">发送</button>
-      </div>
+    <div class="show-watch">
+      <img src="https://lg-24gqn7nu-1257021853.cos.ap-shanghai.myqcloud.com/icon_look.png" alt="">
+      {{ masterInfo.watch }}
     </div>
   </div>
 </template>
@@ -189,7 +190,6 @@
       return {
         article:[],
         taskName:"",
-        _type:'1',
         _id:1,
         comment:"",
         userInfo:null,
@@ -202,7 +202,6 @@
      this.getData()
     },
     onLoad(options){
-      this._type=options._type
       this._id=options._id
       this.userInfo=wx.getStorageSync('userInfo')
     },
@@ -210,7 +209,6 @@
       return{
         title:"逆水寒八卦："+ this.masterInfo.title,
         path: '/pages/communityDetail/main?_id='+this._id,
-        imageUrl:"https://i.loli.net/2018/09/01/5b8989ce2adf9.jpg",
         success: function (res) {
           // 转发成功
           console.log("转发成功:" + JSON.stringify(res));
