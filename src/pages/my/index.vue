@@ -34,6 +34,14 @@
       margin-right: 20rpx;
     }
   }
+  .share{
+    display: block;
+    font-size: 30px;
+    background: none;
+    border:none;
+    text-align: left;
+    float: left;
+  }
 </style>
 <template>
   <div class="ct_w">
@@ -45,55 +53,14 @@
     <div class="ct-b">
       <div class="ct-list">
         <div class="ct-list-header">
-          我的社区
+          关于
         </div>
         <div class="list-body">
           <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_gz.png" alt="">
-            <div>我的关注</div>
-          </div>
-          <!--<div class="list-shequ">-->
-            <!--<img class="icon"  src="/static/imgs/icon/icon_sw.png" alt="">-->
-            <!--<div>我的食谱</div>-->
-          <!--</div>-->
-          <!--<div class="list-shequ">-->
-            <!--<img class="icon" src="/static/imgs/icon/icon_st.png" alt="">-->
-            <!--<div>我的学会</div>-->
-          <!--</div>-->
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_msg.png" alt="">
-            <div>我的消息</div>
-          </div>
-          <!--<div class="list-shequ">-->
-            <!--<img class="icon"  src="/static/imgs/icon/icon_tz.png" alt="">-->
-            <!--<div>我的帖子</div>-->
-          <!--</div>-->
-          <!--<div class="list-shequ">-->
-            <!--<img class="icon"  src="/static/imgs/icon/icon_st.png" alt="">-->
-            <!--<div>我的社团</div>-->
-          <!--</div>-->
-        </div>
-      </div>
-      <div class="ct-list" v-if="false">
-        <div class="ct-list-header">
-          我的服务
-        </div>
-        <div class="list-body" >
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_gz.png" alt="">
-            <div>我的关注</div>
+            <div>投稿联系：fankaifun4@qq.com</div>
           </div>
           <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_sw.png" alt="">
-            <div>我的食谱</div>
-          </div>
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_yg.png" alt="">
-            <div>义工互助</div>
-          </div>
-          <div class="list-shequ">
-            <img class="icon"  src="/static/imgs/icon/icon_lc.png" alt="">
-            <div>我的里程碑</div>
+            <button class="share" open-type="share">分享一波</button>
           </div>
         </div>
       </div>
@@ -113,6 +80,20 @@
     },
     create(){
 
+    },
+    onShareAppMessage(){
+      return{
+        title:"逆水寒攻略资料查询",
+        path: '/pages/index/main',
+        success: function (res) {
+          // 转发成功
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log("转发失败:" + JSON.stringify(res));
+        },
+      }
     },
     mounted(){
 

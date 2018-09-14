@@ -49,13 +49,12 @@ export default {
                     text: "八卦客栈",
                     iconPath: "/static/imgs/shequ.png",
                     selectedIconPath: "/static/imgs/shequ_act.png"
+                }, {
+                    pagePath: "pages/my/main",
+                    text: "关于",
+                    iconPath: "/static/imgs/my.png",
+                    selectedIconPath: "/static/imgs/my_act.png"
                 }
-                // , {
-                //     pagePath: "pages/my/main",
-                //     text: "我的",
-                //     iconPath: "/static/imgs/my.png",
-                //     selectedIconPath: "/static/imgs/my_act.png"
-                // }
             ]
         },
         window: {

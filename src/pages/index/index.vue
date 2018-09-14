@@ -139,6 +139,7 @@
   background: #fff;
   box-sizing: border-box;
   .ls-item-wrap{
+    flex: 1;
     &:first-child{
       margin-right:15px;
     }
@@ -159,6 +160,7 @@
         min-height: 80px;
         border:1px solid #e5e5e6;
         padding:20px 10px;
+        min-height: 60px;
         border-top:none;
         box-sizing: border-box;
         border-radius: 0 0 15px 10px;
