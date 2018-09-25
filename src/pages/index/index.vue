@@ -152,18 +152,22 @@
       flex-direction: column;
       .ls-img-wrap{
         width:100%;
+        max-height:250px;
         overflow: hidden;
         border-radius:10px 10px 0  0;
+        border:1px solid rgba(0,0,0,.2);
+        border-bottom:0;
+        box-sizing: border-box;
       }
       .ls-txt-wrap{
         width:100%;
         min-height: 80px;
-        border:1px solid #e5e5e6;
+        border:1px solid #ccc;
         padding:20px 10px;
         min-height: 60px;
         border-top:none;
         box-sizing: border-box;
-        border-radius: 0 0 15px 10px;
+        border-radius: 0 0 10px 10px;
         font-weight: 700;
         color:#333;
         font-size: 28px;
@@ -209,22 +213,22 @@
            <div class="hr"></div>
         </div>
         <div class="content">
-          <div class="content-list" style="margin-bottom:20rpx;">
+          <div class="content-list" style="margin-bottom:20px;">
             <div class="list-header">
               <img class="icon" src="/static/imgs/jingxuan.png" alt="">八卦头条
             </div>
             <no-data v-if="baguaNodata"></no-data>
             <div class="ls-list" v-else>
               <div class="ls-item-wrap">
-                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==0">
-                  <img class="ls-img-wrap" mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
-                  <div class="ls-txt-wrap" @click="goCommitPath(item)">{{item.title}}</div>
+                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==0"  @click="goCommitPath(item)">
+                  <img class="ls-img-wrap" mode="aspectFill" :src="item.imgs[0]" alt="" >
+                  <div class="ls-txt-wrap" >{{item.title}}</div>
                 </div>
               </div>
               <div class="ls-item-wrap">
-                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==1">
-                  <img class="ls-img-wrap"  mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
-                  <div class="ls-txt-wrap"  @click="goCommitPath(item)">{{item.title}}</div>
+                <div class="ls-li" v-for="(item,index) in playerBg" :key="index" v-if="index%2==1"  @click="goCommitPath(item)">
+                  <img class="ls-img-wrap"  mode="aspectFill" :src="item.imgs[0]" alt="">
+                  <div class="ls-txt-wrap" >{{item.title}}</div>
                 </div>
               </div>
             </div>
@@ -237,15 +241,15 @@
             <no-data v-if="nodata"></no-data>
             <div class="ls-list" v-else>
               <div class="ls-item-wrap">
-                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==0">
-                  <img class="ls-img-wrap" mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
-                  <div class="ls-txt-wrap" @click="goDetailPath(item)">{{item.title}}</div>
+                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==0" @click="goDetailPath(item)">
+                  <img class="ls-img-wrap" mode="aspectFill" :src="item.imgs[0]" alt="" >
+                  <div class="ls-txt-wrap" >{{item.title}}</div>
                 </div>
               </div>
               <div class="ls-item-wrap">
-                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==1">
-                  <img class="ls-img-wrap"  mode="widthFix" :src="item.imgs[0]" alt="" @click="lookoutImg(item.imgs[0],item.imgs)">
-                  <div class="ls-txt-wrap"  @click="goDetailPath(item)">{{item.title}}</div>
+                <div class="ls-li" v-for="(item,index) in playerXd" :key="index" v-if="index%2==1"  @click="goDetailPath(item)">
+                  <img class="ls-img-wrap"  mode="aspectFill" :src="item.imgs[0]" alt="" >
+                  <div class="ls-txt-wrap" >{{item.title}}</div>
                 </div>
               </div>
             </div>
